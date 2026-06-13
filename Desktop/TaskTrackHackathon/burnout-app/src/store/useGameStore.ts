@@ -198,13 +198,13 @@ export const useGameStore = create<GameState>()(
         let reward = 0;
         let risk = 0;
 
-        if (difficulty === 'easy') { baseChance = 70; reward = 200; risk = 50; }
-        else if (difficulty === 'medium') { baseChance = 40; reward = 500; risk = 150; }
-        else { baseChance = 10; reward = 1500; risk = 400; }
+        if (difficulty === 'easy') { baseChance = 40; reward = 200; risk = 50; }
+        else if (difficulty === 'medium') { baseChance = 20; reward = 500; risk = 150; }
+        else { baseChance = 5; reward = 1500; risk = 400; }
 
-        // Boost chance: 2% per pop, 10% per guard tower
-        let chance = baseChance + (pop * 2) + (defense * 10);
-        chance = Math.min(95, chance); // Cap at 95%
+        // Boost chance: 1% per pop, 5% per guard tower
+        let chance = baseChance + (pop * 1) + (defense * 5);
+        chance = Math.min(75, chance); // Cap at 75% for hard progression
 
         const roll = Math.random() * 100;
         const success = roll <= chance;

@@ -65,7 +65,7 @@ export default function Slideshow() {
   // Raid simulator state
   const [raidDifficulty, setRaidDifficulty] = useState<'easy' | 'medium' | 'hard'>('easy');
   const [raidStatus, setRaidStatus] = useState<'idle' | 'raiding' | 'victory' | 'defeat'>('idle');
-  const [raidChance, setRaidChance] = useState(70);
+  const [raidChance, setRaidChance] = useState(40);
   const [raidResultGold, setRaidResultGold] = useState(0);
 
   // References
@@ -146,9 +146,9 @@ export default function Slideshow() {
   // Update raid win chances when difficulty changes
   useEffect(() => {
     switch (raidDifficulty) {
-      case 'easy': setRaidChance(70); break;
-      case 'medium': setRaidChance(45); break;
-      case 'hard': setRaidChance(15); break;
+      case 'easy': setRaidChance(40); break;
+      case 'medium': setRaidChance(20); break;
+      case 'hard': setRaidChance(5); break;
     }
   }, [raidDifficulty]);
 

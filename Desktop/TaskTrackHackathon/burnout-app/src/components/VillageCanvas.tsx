@@ -9,8 +9,6 @@ export default function VillageCanvas() {
   const { buildings, inventory, resolveBuildingProblem, upgradeBuilding, healBuilding, currency } = useGameStore();
   const [selectedBuildingId, setSelectedBuildingId] = useState<string | null>(null);
   const [shakeId, setShakeId] = useState<string | null>(null);
-  const [scale, setScale] = useState(1);
-  const constraintsRef = useRef<HTMLDivElement>(null);
 
   const triggerShake = (id: string) => {
     setShakeId(id);
@@ -51,12 +49,7 @@ export default function VillageCanvas() {
   }
 
   return (
-    <div ref={constraintsRef} className="relative w-full h-full min-h-[600px] bg-[#1a1a24] border border-gray-800 rounded-2xl overflow-hidden shadow-2xl">
-      {/* Zoom Controls */}
-      <div className="absolute top-4 left-4 z-50 flex flex-col gap-2 bg-black/50 backdrop-blur p-2 rounded-lg border border-gray-800">
-        <button onClick={() => setScale(s => Math.min(s + 0.2, 2))} className="p-2 text-white hover:text-accent hover:bg-white/10 rounded transition-colors"><ZoomIn size={20}/></button>
-        <button onClick={() => setScale(s => Math.max(s - 0.2, 0.5))} className="p-2 text-white hover:text-accent hover:bg-white/10 rounded transition-colors"><ZoomOut size={20}/></button>
-      </div>
+    <div className="relative w-full h-full min-h-[600px] bg-[#1a1a24] border border-gray-800 rounded-2xl overflow-hidden shadow-2xl">
       <style>{`
         @keyframes wander-1 {
           0% { transform: translate(0px, 0px); }
@@ -78,15 +71,8 @@ export default function VillageCanvas() {
         }
       `}</style>
       
-      {/* Draggable Map Container */}
-      <motion.div 
-        drag 
-        dragConstraints={constraintsRef}
-        dragElastic={0.2}
-        className="absolute inset-0 flex items-center justify-center cursor-grab active:cursor-grabbing w-[150%] h-[150%] left-[-25%] top-[-25%]"
-        animate={{ scale }}
-        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-      >
+      {/* Locked Map Container */}
+      <div className="absolute inset-0 flex items-center justify-center w-full h-full">
         <img 
           src={currentStageImage} 
           alt="Village Map Stage" 
@@ -181,7 +167,7 @@ export default function VillageCanvas() {
           }
           return dots;
         })}
-      </motion.div>
+      </div>
 
       {/* Building Details Modal */}
       {selectedBuilding && (
