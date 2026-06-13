@@ -39,14 +39,122 @@ export default function VillageCanvas() {
   const minBuildingLevel = buildings.length > 0 ? Math.min(...buildings.map(b => b.level)) : 1;
   const minInventoryCount = Math.min(inventory.farms, inventory.stores, inventory.guard_towers);
 
+  let currentStage = 0;
   let currentStageImage = "/assets/village_base.png";
   if (minInventoryCount >= 3 && minBuildingLevel >= 3) {
     currentStageImage = "/assets/village_stage_3.png";
+    currentStage = 3;
   } else if (minInventoryCount >= 2 && minBuildingLevel >= 2) {
     currentStageImage = "/assets/village_stage_2.png";
+    currentStage = 2;
   } else if (minInventoryCount >= 1) {
     currentStageImage = "/assets/village_stage_1.png";
+    currentStage = 1;
   }
+
+  // Dynamic coordinates matched precisely to the generated visual features of each map stage
+  const getPositionsForStage = (stage: number): Record<string, { top: string, left: string }[]> => {
+    switch (stage) {
+      case 3: // Fully developed town (walls, cathedral keep, many tents, stone towers)
+        return {
+          farms: [
+            { top: '48%', left: '44%' },
+            { top: '47%', left: '24%' },
+            { top: '57%', left: '25%' },
+            { top: '35%', left: '24%' },
+            { top: '22%', left: '16%' }
+          ],
+          stores: [
+            { top: '65%', left: '49%' },
+            { top: '60%', left: '58%' },
+            { top: '72%', left: '35%' },
+            { top: '75%', left: '56%' },
+            { top: '77%', left: '45%' }
+          ],
+          guard_towers: [
+            { top: '70%', left: '85%' },
+            { top: '24%', left: '50%' },
+            { top: '76%', left: '71%' },
+            { top: '64%', left: '10%' },
+            { top: '42%', left: '81%' }
+          ]
+        };
+      case 2: // Windmill, stone center tower, stone paved paths, expanded marketplace
+        return {
+          farms: [
+            { top: '48%', left: '44%' },
+            { top: '47%', left: '24%' },
+            { top: '57%', left: '25%' },
+            { top: '35%', left: '24%' },
+            { top: '30%', left: '12%' }
+          ],
+          stores: [
+            { top: '65%', left: '49%' },
+            { top: '60%', left: '58%' },
+            { top: '72%', left: '35%' },
+            { top: '75%', left: '56%' },
+            { top: '50%', left: '70%' }
+          ],
+          guard_towers: [
+            { top: '70%', left: '85%' },
+            { top: '24%', left: '50%' },
+            { top: '64%', left: '10%' },
+            { top: '80%', left: '20%' },
+            { top: '30%', left: '60%' }
+          ]
+        };
+      case 1: // First expansion: crop fields on left, watchtower on bottom right, store stall in center path
+        return {
+          farms: [
+            { top: '48%', left: '44%' },
+            { top: '47%', left: '24%' },
+            { top: '57%', left: '25%' },
+            { top: '38%', left: '18%' },
+            { top: '22%', left: '32%' }
+          ],
+          stores: [
+            { top: '65%', left: '49%' },
+            { top: '60%', left: '58%' },
+            { top: '45%', left: '55%' },
+            { top: '52%', left: '65%' },
+            { top: '38%', left: '45%' }
+          ],
+          guard_towers: [
+            { top: '70%', left: '85%' },
+            { top: '60%', left: '30%' },
+            { top: '50%', left: '40%' },
+            { top: '80%', left: '10%' },
+            { top: '40%', left: '50%' }
+          ]
+        };
+      default: // Base Stage (0): Cottage, path, well, simple central clearing
+        return {
+          farms: [
+            { top: '48%', left: '44%' },
+            { top: '30%', left: '25%' },
+            { top: '38%', left: '18%' },
+            { top: '22%', left: '32%' },
+            { top: '45%', left: '15%' }
+          ],
+          stores: [
+            { top: '54%', left: '49%' },
+            { top: '45%', left: '55%' },
+            { top: '52%', left: '65%' },
+            { top: '38%', left: '45%' },
+            { top: '60%', left: '75%' }
+          ],
+          guard_towers: [
+            { top: '60%', left: '61%' },
+            { top: '60%', left: '30%' },
+            { top: '70%', left: '20%' },
+            { top: '50%', left: '40%' },
+            { top: '80%', left: '10%' }
+          ]
+        };
+    }
+  };
+
+  const expansionPositions = getPositionsForStage(currentStage);
 
   return (
     <div className="relative w-full h-[620px] bg-[#111119] bg-[linear-gradient(to_right,#1a1a26_1px,transparent_1px),linear-gradient(to_bottom,#1a1a26_1px,transparent_1px)] bg-[size:2.5rem_2.5rem] border border-gray-800 rounded-2xl overflow-hidden shadow-2xl flex items-center justify-center">
@@ -104,30 +212,6 @@ export default function VillageCanvas() {
           // Decide how many dots to show. 1 dot per 2 buildings, max 5 dots.
           const numDots = Math.min(5, Math.ceil(totalCount / 2));
           const dots = [];
-
-          const expansionPositions: Record<string, { top: string, left: string }[]> = {
-            farms: [
-              { top: '30%', left: '25%' },
-              { top: '38%', left: '18%' },
-              { top: '22%', left: '32%' },
-              { top: '45%', left: '15%' },
-              { top: '15%', left: '40%' }
-            ],
-            stores: [
-              { top: '45%', left: '55%' },
-              { top: '52%', left: '65%' },
-              { top: '38%', left: '45%' },
-              { top: '60%', left: '75%' },
-              { top: '30%', left: '35%' }
-            ],
-            guard_towers: [
-              { top: '60%', left: '30%' },
-              { top: '70%', left: '20%' },
-              { top: '50%', left: '40%' },
-              { top: '80%', left: '10%' },
-              { top: '40%', left: '50%' }
-            ]
-          };
 
           for (let i = 0; i < numDots; i++) {
             const isLastDot = i === numDots - 1;
