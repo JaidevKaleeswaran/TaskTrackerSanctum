@@ -24,12 +24,13 @@ import {
   Hammer,
   ShieldCheck,
   ArrowRight,
-  GraduationCap
+  GraduationCap,
+  Calendar
 } from 'lucide-react';
 import Link from 'next/link';
 
 // Slide Types
-type SlideType = 'intro' | 'problem' | 'solution' | 'ai' | 'breathing' | 'village' | 'crises' | 'raids' | 'stack' | 'conclusion';
+type SlideType = 'intro' | 'problem' | 'solution' | 'ai' | 'breathing' | 'village' | 'calendar' | 'crises' | 'raids' | 'stack' | 'conclusion';
 
 interface Slide {
   id: SlideType;
@@ -44,6 +45,7 @@ const SLIDES: Slide[] = [
   { id: 'ai', title: 'AI Pacing Mentor', subtitle: 'Gemini-Powered Stress Reflection' },
   { id: 'breathing', title: 'Interactive Somatic Training', subtitle: 'Portable Regulation Tutorials' },
   { id: 'village', title: 'Simulated Resource Budgeting', subtitle: 'Balancing Rest & Productivity' },
+  { id: 'calendar', title: 'Tactical Calendar Planner', subtitle: 'Pacing Focus Across the Month' },
   { id: 'crises', title: 'Consequence Simulation', subtitle: 'Learning the Cost of Exhaustion' },
   { id: 'raids', title: 'Strategic Risk Training', subtitle: 'Probability & Risk Management' },
   { id: 'stack', title: 'Technical Architecture', subtitle: 'Engineering the Learning Engine' },
@@ -573,6 +575,78 @@ export default function Slideshow() {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        );
+
+      case 'calendar':
+        return (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center h-full max-w-4xl mx-auto px-4">
+            <div className="space-y-6 text-left">
+              <div className="inline-flex items-center gap-2 bg-blue-950/40 border border-blue-900/60 px-3 py-1.5 rounded-full text-blue-400 text-xs font-semibold uppercase tracking-wider">
+                <Calendar className="text-accent" size={14} /> Tactical Calendar Planner
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-white leading-tight">
+                Pacing Focus Over Months
+              </h2>
+              <p className="text-gray-450 text-sm leading-relaxed">
+                Aegis features a complete monthly calendar planner. By planning ahead, users spread focus loads and recharge activities across days to avoid fatigue spikes.
+              </p>
+              <ul className="space-y-3.5 text-xs text-gray-300">
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="text-blue-400 shrink-0 mt-0.5" size={16} />
+                  <span><strong>Overwhelm Isolation:</strong> Future scheduled tasks are hidden from the daily dashboard, keeping the immediate workspace focused and stress-free.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="text-blue-400 shrink-0 mt-0.5" size={16} />
+                  <span><strong>Integrated Pacing Rewards:</strong> Scheduling and logging rest-based Recharge tasks contributes directly to village defenses and economy multipliers.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="text-blue-400 shrink-0 mt-0.5" size={16} />
+                  <span><strong>Month-Over-Month Visibility:</strong> Easily navigate between months to assess past trends and future cognitive allocations.</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Interactive/Visual representation of a calendar day grid cell */}
+            <div className="bg-[#121212] p-5 rounded-2xl border border-gray-800 shadow-xl flex flex-col gap-4 text-left">
+              <div className="flex items-center justify-between border-b border-gray-800 pb-2">
+                <span className="text-[10px] font-bold text-accent uppercase tracking-widest">Interactive Calendar Widget</span>
+                <span className="text-[9px] font-mono text-gray-500">JUNE 2026</span>
+              </div>
+              
+              <div className="grid grid-cols-3 gap-2">
+                {/* Simulated Day 12 */}
+                <div className="bg-black/40 border border-gray-900 rounded-lg p-2 opacity-50">
+                  <span className="text-[10px] font-mono text-gray-500 font-bold block mb-1">12</span>
+                  <div className="bg-blue-950/25 border border-blue-900/30 text-blue-400 p-0.5 rounded text-[8px] truncate font-bold">PR Review</div>
+                </div>
+
+                {/* Simulated Day 13 (Today) */}
+                <div className="bg-accent/5 border border-accent rounded-lg p-2 shadow-[0_0_10px_rgba(255,215,0,0.15)] relative overflow-hidden">
+                  <span className="text-[10px] font-mono text-accent font-bold block mb-1">13</span>
+                  <div className="space-y-1">
+                    <div className="bg-blue-950/40 border border-blue-900/50 text-blue-400 p-0.5 rounded text-[8px] truncate font-bold">Code Slideshow</div>
+                    <div className="bg-green-950/40 border border-green-900/50 text-green-400 p-0.5 rounded text-[8px] truncate font-bold">5m Breathing</div>
+                  </div>
+                  <div className="absolute top-0 right-0 w-6 h-6 bg-accent opacity-5 rounded-bl-full pointer-events-none" />
+                </div>
+
+                {/* Simulated Day 14 (Future) */}
+                <div className="bg-black/40 border border-gray-900 rounded-lg p-2">
+                  <span className="text-[10px] font-mono text-gray-400 font-bold block mb-1">14</span>
+                  <div className="bg-green-950/25 border border-green-900/30 text-green-400 p-0.5 rounded text-[8px] truncate font-bold font-mono">Walk in Park</div>
+                </div>
+              </div>
+
+              <div className="bg-black p-3 rounded-lg border border-gray-800 space-y-2 text-xs">
+                <div className="flex items-center gap-2 text-gray-400 text-[10px] uppercase font-mono tracking-wider">
+                  <Timer size={12} className="text-accent" /> Pacing Analytics
+                </div>
+                <p className="text-gray-300 leading-normal text-[11px]">
+                  Pacing index is **Optimal**. Tasks are scheduled evenly across the week. Low risk of compounding burnout.
+                </p>
+              </div>
             </div>
           </div>
         );
