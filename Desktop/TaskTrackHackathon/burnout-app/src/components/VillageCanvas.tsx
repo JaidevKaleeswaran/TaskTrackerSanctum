@@ -1,13 +1,16 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useGameStore, Building } from '@/store/useGameStore';
-import { ShieldAlert, Wrench, ArrowUpCircle, X } from 'lucide-react';
+import { ShieldAlert, Wrench, ArrowUpCircle, X, ZoomIn, ZoomOut } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function VillageCanvas() {
   const { buildings, inventory, resolveBuildingProblem, upgradeBuilding, healBuilding, currency } = useGameStore();
   const [selectedBuildingId, setSelectedBuildingId] = useState<string | null>(null);
   const [shakeId, setShakeId] = useState<string | null>(null);
+  const [scale, setScale] = useState(1);
+  const constraintsRef = useRef<HTMLDivElement>(null);
 
   const triggerShake = (id: string) => {
     setShakeId(id);
@@ -18,16 +21,6 @@ export default function VillageCanvas() {
     if (health > 75) return 'healthy';
     if (health > 30) return 'damaged';
     return 'critical';
-  };
-
-  // Fixed map position for the 3 core items on the isometric map
-  const getPosition = (b: Building) => {
-    const positions: Record<string, { top: string, left: string }> = {
-      farms: { top: '30%', left: '25%' },
-      stores: { top: '45%', left: '55%' },
-      guard_towers: { top: '60%', left: '30%' }
-    };
-    return positions[b.id] || { top: '50%', left: '50%' };
   };
 
   const handleRepair = (b: Building) => {
@@ -45,7 +38,6 @@ export default function VillageCanvas() {
 
   const selectedBuilding = buildings.find(b => b.id === selectedBuildingId);
 
-  // Calculate Stage Gating Requirements
   const minBuildingLevel = buildings.length > 0 ? Math.min(...buildings.map(b => b.level)) : 1;
   const minInventoryCount = Math.min(inventory.farms, inventory.stores, inventory.guard_towers);
 
@@ -59,10 +51,42 @@ export default function VillageCanvas() {
   }
 
   return (
-    <div className="relative w-full h-full min-h-[600px] bg-black border border-gray-800 rounded-2xl overflow-hidden shadow-2xl">
+    <div ref={constraintsRef} className="relative w-full h-full min-h-[600px] bg-[#1a1a24] border border-gray-800 rounded-2xl overflow-hidden shadow-2xl">
+      {/* Zoom Controls */}
+      <div className="absolute top-4 left-4 z-50 flex flex-col gap-2 bg-black/50 backdrop-blur p-2 rounded-lg border border-gray-800">
+        <button onClick={() => setScale(s => Math.min(s + 0.2, 2))} className="p-2 text-white hover:text-accent hover:bg-white/10 rounded transition-colors"><ZoomIn size={20}/></button>
+        <button onClick={() => setScale(s => Math.max(s - 0.2, 0.5))} className="p-2 text-white hover:text-accent hover:bg-white/10 rounded transition-colors"><ZoomOut size={20}/></button>
+      </div>
+      <style>{`
+        @keyframes wander-1 {
+          0% { transform: translate(0px, 0px); }
+          33% { transform: translate(15px, -10px); }
+          66% { transform: translate(-10px, 15px); }
+          100% { transform: translate(0px, 0px); }
+        }
+        @keyframes wander-2 {
+          0% { transform: translate(0px, 0px); }
+          33% { transform: translate(-15px, 10px); }
+          66% { transform: translate(10px, -15px); }
+          100% { transform: translate(0px, 0px); }
+        }
+        @keyframes wander-3 {
+          0% { transform: translate(0px, 0px); }
+          33% { transform: translate(10px, 15px); }
+          66% { transform: translate(-15px, -10px); }
+          100% { transform: translate(0px, 0px); }
+        }
+      `}</style>
       
-      {/* Static Map Container */}
-      <div className="absolute inset-0 flex items-center justify-center">
+      {/* Draggable Map Container */}
+      <motion.div 
+        drag 
+        dragConstraints={constraintsRef}
+        dragElastic={0.2}
+        className="absolute inset-0 flex items-center justify-center cursor-grab active:cursor-grabbing w-[150%] h-[150%] left-[-25%] top-[-25%]"
+        animate={{ scale }}
+        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+      >
         <img 
           src={currentStageImage} 
           alt="Village Map Stage" 
@@ -113,45 +137,51 @@ export default function VillageCanvas() {
             dots.push(
               <div 
                 key={uniqueId}
-                className="absolute transition-transform hover:scale-105 cursor-pointer flex flex-col items-center group z-10"
+                className="absolute z-10"
                 style={{ top: pos.top, left: pos.left, transform: 'translate(-50%, -50%)' }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setSelectedBuildingId(b.id);
-                }}
               >
-                {/* Floating Notification Textboxes (Only show problems on the primary dot) */}
-                {i === 0 && b.current_problems.length > 0 && (
-                  <div className={`absolute bottom-full mb-2 bg-red-950/90 border border-red-500 rounded-lg p-3 shadow-[0_0_15px_rgba(239,68,68,0.3)] w-48 text-center z-50 ${shakeId === `fix-${b.id}` ? 'animate-error-shake' : 'animate-bounce'}`}>
-                    <ShieldAlert className="text-red-500 mx-auto mb-1" size={20} />
-                    <p className="text-white text-xs font-bold mb-2">{b.current_problems[0]}</p>
-                    <button 
-                      onClick={(evt) => {
-                        evt.stopPropagation();
-                        if (!resolveBuildingProblem(b.id, 0, 50)) {
-                          triggerShake(`fix-${b.id}`);
-                        }
-                      }}
-                      className="w-full bg-red-500 hover:bg-red-400 text-black text-xs font-bold py-1 rounded"
-                    >
-                      Fix (50 💰)
-                    </button>
-                  </div>
-                )}
+                <div style={{ animation: `wander-${(i % 3) + 1} ${10 + i * 2}s infinite alternate ease-in-out` }}>
+                  <div
+                    className="transition-transform hover:scale-105 cursor-pointer flex flex-col items-center group"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedBuildingId(b.id);
+                    }}
+                  >
+                    {/* Floating Notification Textboxes (Only show problems on the primary dot) */}
+                    {i === 0 && b.current_problems.length > 0 && (
+                      <div className={`absolute bottom-full mb-2 bg-red-950/90 border border-red-500 rounded-lg p-3 shadow-[0_0_15px_rgba(239,68,68,0.3)] w-48 text-center z-50 ${shakeId === `fix-${b.id}` ? 'animate-error-shake' : 'animate-bounce'}`}>
+                        <ShieldAlert className="text-red-500 mx-auto mb-1" size={20} />
+                        <p className="text-white text-xs font-bold mb-2">{b.current_problems[0]}</p>
+                        <button 
+                          onClick={(evt) => {
+                            evt.stopPropagation();
+                            if (!resolveBuildingProblem(b.id, 0, 50)) {
+                              triggerShake(`fix-${b.id}`);
+                            }
+                          }}
+                          className="w-full bg-red-500 hover:bg-red-400 text-black text-xs font-bold py-1 rounded"
+                        >
+                          Fix (50 💰)
+                        </button>
+                      </div>
+                    )}
 
-                {/* Interaction Marker */}
-                <div className="mt-8 flex flex-col items-center">
-                  <div className={`w-3 h-3 rounded-full shadow-[0_0_10px_rgba(255,255,255,0.5)] ${state === 'healthy' ? 'bg-green-500' : state === 'damaged' ? 'bg-yellow-500' : 'bg-red-500 animate-pulse'}`} />
-                  <span className="text-[10px] font-bold text-white bg-black/50 px-2 py-0.5 rounded mt-1 whitespace-nowrap backdrop-blur-sm">
-                    {b.name} (x{countForThisDot})
-                  </span>
+                    {/* Interaction Marker */}
+                    <div className="mt-8 flex flex-col items-center">
+                      <div className={`w-3 h-3 rounded-full shadow-[0_0_10px_rgba(255,255,255,0.5)] ${state === 'healthy' ? 'bg-green-500' : state === 'damaged' ? 'bg-yellow-500' : 'bg-red-500 animate-pulse'}`} />
+                      <span className="text-[10px] font-bold text-white bg-black/50 px-2 py-0.5 rounded mt-1 whitespace-nowrap backdrop-blur-sm">
+                        {b.name} (x{countForThisDot})
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
             );
           }
           return dots;
         })}
-      </div>
+      </motion.div>
 
       {/* Building Details Modal */}
       {selectedBuilding && (

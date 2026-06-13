@@ -11,8 +11,9 @@ You will receive a JSON payload containing:
 
 Analyze the payload and return ONLY a valid JSON object matching the schema below. Do not use markdown blocks.
 
-- If the burnout_score is low (<40), generate mild resource issues.
-- If the burnout_score is high (>70), generate critical systemic emergencies.
+- If the burnout_score is low (<20), generate very mild resource issues.
+- If the burnout_score is medium (20-50), generate moderate problems.
+- If the burnout_score is high (>50), generate critical systemic emergencies.
 
 Output Schema:
 {

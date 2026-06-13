@@ -1,77 +1,35 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { collection, query, orderBy, getDocs, deleteDoc, doc, updateDoc } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
-import { History as HistoryIcon, Trash2, Edit2, Loader2, Save, X, AlertCircle } from 'lucide-react';
-import { TaskType } from '@/store/useAppStore';
-
-interface Session {
-  id: string;
-  type: TaskType;
-  durationMinutes: number;
-  completedAt: string;
-}
+import { useAppStore } from '@/store/useAppStore';
+import { History as HistoryIcon, Trash2, Edit2, Save, X, AlertCircle } from 'lucide-react';
 
 export default function HistoryTab() {
-  const [sessions, setSessions] = useState<Session[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { sessions, deleteSession, updateSession, generateMockSessions } = useAppStore();
+  const [isClient, setIsClient] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editDuration, setEditDuration] = useState<number>(0);
 
-  const fetchSessions = async () => {
-    try {
-      const q = query(collection(db, 'sessions'), orderBy('completedAt', 'desc'));
-      const snapshot = await getDocs(q);
-      const data = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      })) as Session[];
-      setSessions(data);
-      setError(null);
-    } catch (e: any) {
-      console.error(e);
-      if (e.code === 'permission-denied') {
-        setError('Firebase Permission Denied. Please ensure your Firestore security rules are set to allow reads and writes (e.g., `allow read, write: if true;` for testing).');
-      } else {
-        setError(e.message || 'Failed to load history.');
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
-    fetchSessions();
+    setIsClient(true);
   }, []);
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = (id: string) => {
     if (!confirm('Are you sure you want to delete this log?')) return;
-    try {
-      await deleteDoc(doc(db, 'sessions', id));
-      setSessions(sessions.filter(s => s.id !== id));
-    } catch (e) {
-      console.error(e);
-    }
+    deleteSession(id);
   };
 
-  const handleEditStart = (session: Session) => {
-    setEditingId(session.id);
-    setEditDuration(session.durationMinutes);
+  const handleEditStart = (id: string, durationMinutes: number) => {
+    setEditingId(id);
+    setEditDuration(durationMinutes);
   };
 
-  const handleEditSave = async (id: string) => {
-    try {
-      await updateDoc(doc(db, 'sessions', id), {
-        durationMinutes: editDuration
-      });
-      setSessions(sessions.map(s => s.id === id ? { ...s, durationMinutes: editDuration } : s));
-      setEditingId(null);
-    } catch (e) {
-      console.error(e);
-    }
+  const handleEditSave = (id: string) => {
+    updateSession(id, editDuration);
+    setEditingId(null);
   };
+
+  if (!isClient) return null;
 
   return (
     <div className="max-w-4xl mx-auto pt-6 h-full flex flex-col gap-6">
@@ -84,47 +42,17 @@ export default function HistoryTab() {
           <p className="text-gray-400 mt-2">Review your past focuses and recharges.</p>
         </div>
         <button 
-          onClick={async () => {
-            setIsLoading(true);
-            try {
-              const { addDoc } = await import('firebase/firestore');
-              const types: TaskType[] = ['Focus', 'Recharge'];
-              for(let i=0; i<5; i++) {
-                const randomTime = new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000);
-                await addDoc(collection(db, 'sessions'), {
-                  type: types[Math.floor(Math.random() * types.length)],
-                  durationMinutes: Math.floor(Math.random() * 45) + 15,
-                  completedAt: randomTime.toISOString(),
-                  title: `Generated Task ${i+1}`
-                });
-              }
-              await fetchSessions();
-            } catch(e) { console.error(e); }
-          }}
+          onClick={() => generateMockSessions()}
           className="bg-gray-800 hover:bg-gray-700 text-xs font-bold py-2 px-3 rounded-lg transition-colors border border-gray-700 text-white"
         >
           + Generate Mock Data
         </button>
       </header>
 
-      {error && (
-        <div className="bg-red-500/10 border border-red-500/50 rounded-xl p-4 flex items-start gap-4">
-          <AlertCircle className="text-red-500 shrink-0 mt-1" />
-          <div>
-            <h4 className="text-red-500 font-bold">Error Loading History</h4>
-            <p className="text-sm text-red-200 mt-1">{error}</p>
-          </div>
-        </div>
-      )}
-
       <div className="bg-surface rounded-2xl border border-gray-800 shadow-xl overflow-hidden flex-1 flex flex-col">
-        {isLoading ? (
-          <div className="flex items-center justify-center flex-1">
-            <Loader2 className="animate-spin text-accent" size={32} />
-          </div>
-        ) : sessions.length === 0 && !error ? (
+        {sessions.length === 0 ? (
           <div className="flex items-center justify-center flex-1 text-gray-500">
-            No completed sessions yet.
+            No completed sessions yet. Click "Generate Mock Data" to populate.
           </div>
         ) : (
           <div className="overflow-y-auto flex-1 p-6">
@@ -174,7 +102,7 @@ export default function HistoryTab() {
                             </>
                           ) : (
                             <>
-                              <button onClick={() => handleEditStart(session)} className="p-1.5 text-gray-500 hover:text-white transition-colors"><Edit2 size={16} /></button>
+                              <button onClick={() => handleEditStart(session.id, session.durationMinutes)} className="p-1.5 text-gray-500 hover:text-white transition-colors"><Edit2 size={16} /></button>
                               <button onClick={() => handleDelete(session.id)} className="p-1.5 text-gray-500 hover:text-red-500 transition-colors"><Trash2 size={16} /></button>
                             </>
                           )}

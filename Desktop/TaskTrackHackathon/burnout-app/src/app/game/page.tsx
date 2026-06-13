@@ -6,11 +6,12 @@ import VillageCanvas from '@/components/VillageCanvas';
 import { useState } from 'react';
 
 export default function GameTab() {
-  const { currency, village_status, inventory, purchaseUpgrade, triggerInvasion, activeInvasion, resolveInvasion, buildings, villageName } = useGameStore();
+  const { currency, village_status, inventory, purchaseUpgrade, triggerInvasion, activeInvasion, resolveInvasion, buildings, villageName, attemptRaid, forceSpawnProblem } = useGameStore();
   const [shakeId, setShakeId] = useState<string | null>(null);
   const [isConsulting, setIsConsulting] = useState(false);
   const [isEditingName, setIsEditingName] = useState(false);
   const [tempName, setTempName] = useState("");
+  const [raidResult, setRaidResult] = useState<{ success: boolean; message: string } | null>(null);
 
   const triggerShake = (id: string) => {
     setShakeId(id);
@@ -111,6 +112,24 @@ export default function GameTab() {
         </div>
       )}
 
+      {/* RAID RESULT OVERLAY */}
+      {raidResult && (
+        <div className="absolute inset-0 z-50 bg-black/80 backdrop-blur-sm flex flex-col items-center justify-center p-4">
+          <div className={`border-2 rounded-2xl p-8 max-w-md w-full text-center shadow-[0_0_50px_rgba(0,0,0,0.5)] animate-in zoom-in-95 duration-300 ${raidResult.success ? 'bg-green-950/90 border-green-500' : 'bg-red-950/90 border-red-500'}`}>
+            <h2 className={`text-3xl font-black mb-2 uppercase tracking-widest ${raidResult.success ? 'text-green-500' : 'text-red-500'}`}>
+              {raidResult.success ? 'Raid Successful' : 'Raid Failed'}
+            </h2>
+            <p className="text-white text-lg mb-8 font-medium">{raidResult.message}</p>
+            <button 
+              onClick={() => setRaidResult(null)}
+              className="w-full py-4 rounded-xl font-bold text-lg transition-all bg-gray-800 text-white hover:bg-gray-700"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Master Control Panel (Left Side UI) */}
       <aside className="w-full lg:w-96 flex flex-col gap-6 shrink-0 h-full overflow-y-auto pr-2 custom-scrollbar">
         
@@ -202,6 +221,12 @@ export default function GameTab() {
               Reset All
             </button>
             <button 
+              onClick={() => forceSpawnProblem()}
+              className="bg-red-500/20 hover:bg-red-500/40 text-red-500 text-xs font-bold px-3 py-2 rounded-lg border border-red-500/50 transition-colors"
+            >
+              Test Problem
+            </button>
+            <button 
               onClick={() => useGameStore.getState().earnCurrency(100000)}
               className="bg-yellow-500/20 hover:bg-yellow-500/40 text-yellow-500 text-xs font-bold px-3 py-2 rounded-lg border border-yellow-500/50 transition-colors"
             >
@@ -272,6 +297,86 @@ export default function GameTab() {
               >
                 <span className="text-sm font-bold text-white">+1 Tower</span>
                 <span className={`text-sm font-bold ${currency >= 500 ? 'text-accent' : 'text-red-500'}`}>500 💰</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* War Room / Raiding Map */}
+        <div className="bg-red-950/20 rounded-2xl p-6 border border-red-900/50 shadow-xl flex-1 mt-6">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-2 bg-red-500/20 rounded-lg"><Sword className="text-red-400" size={20} /></div>
+            <h2 className="text-xl font-bold text-white tracking-tight">War Room</h2>
+          </div>
+          <p className="text-sm text-gray-400 mb-4">Launch raids against other villages. Win probability scales with your Population and Guard Towers.</p>
+          
+          <div className="space-y-4">
+            {/* Easy Raid */}
+            <div className="bg-black/50 rounded-xl p-4 border border-gray-800">
+              <div className="flex justify-between items-start mb-2">
+                <div>
+                  <h3 className="text-white font-bold">Small Settlement</h3>
+                  <p className="text-xs text-gray-500 mt-1">Low Risk / Low Reward</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-xs text-green-400 font-bold">+200 💰</p>
+                  <p className="text-xs text-red-500 font-bold">-50 💰</p>
+                </div>
+              </div>
+              <button 
+                onClick={() => {
+                  const result = attemptRaid('easy');
+                  setRaidResult(result);
+                }}
+                className="w-full mt-3 p-2 rounded bg-red-900/30 hover:bg-red-900/50 border border-red-900 transition-colors text-sm font-bold text-white"
+              >
+                Launch Raid
+              </button>
+            </div>
+
+            {/* Medium Raid */}
+            <div className="bg-black/50 rounded-xl p-4 border border-gray-800">
+              <div className="flex justify-between items-start mb-2">
+                <div>
+                  <h3 className="text-white font-bold">Fortified Town</h3>
+                  <p className="text-xs text-gray-500 mt-1">Medium Risk / Medium Reward</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-xs text-green-400 font-bold">+500 💰</p>
+                  <p className="text-xs text-red-500 font-bold">-150 💰</p>
+                </div>
+              </div>
+              <button 
+                onClick={() => {
+                  const result = attemptRaid('medium');
+                  setRaidResult(result);
+                }}
+                className="w-full mt-3 p-2 rounded bg-red-900/30 hover:bg-red-900/50 border border-red-900 transition-colors text-sm font-bold text-white"
+              >
+                Launch Raid
+              </button>
+            </div>
+
+            {/* Hard Raid */}
+            <div className="bg-black/50 rounded-xl p-4 border border-gray-800">
+              <div className="flex justify-between items-start mb-2">
+                <div>
+                  <h3 className="text-white font-bold">The Citadel</h3>
+                  <p className="text-xs text-gray-500 mt-1">High Risk / High Reward</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-xs text-green-400 font-bold">+1500 💰</p>
+                  <p className="text-xs text-red-500 font-bold">-400 💰</p>
+                </div>
+              </div>
+              <button 
+                onClick={() => {
+                  const result = attemptRaid('hard');
+                  setRaidResult(result);
+                }}
+                className="w-full mt-3 p-2 rounded bg-red-900/30 hover:bg-red-900/50 border border-red-900 transition-colors text-sm font-bold text-white"
+              >
+                Launch Raid
               </button>
             </div>
           </div>

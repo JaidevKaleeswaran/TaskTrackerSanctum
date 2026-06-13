@@ -7,7 +7,7 @@ import { Brain, Loader2 } from 'lucide-react';
 export default function MindGuard() {
   const [checkIn, setCheckIn] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { recentHistory, setLatestInsight, focusSeconds, burnoutTimeLimit, adjustBurnoutLimit } = useAppStore();
+  const { recentHistory, setLatestInsight, focusSeconds, burnoutTimeLimit, setBurnoutTimeLimit } = useAppStore();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,7 +35,10 @@ export default function MindGuard() {
 
       // Adaptive Stamina Logic:
       if (data.burnout_score > 75 && (focusSeconds / 60) < burnoutTimeLimit) {
-        adjustBurnoutLimit(-5);
+        // If they report early burnout, dramatically reduce the timer to their current active time
+        // This will immediately trigger the BreakPromptModal on the next tick
+        const currentMins = Math.floor(focusSeconds / 60);
+        setBurnoutTimeLimit(Math.max(1, currentMins)); // Set to 1 min min for testing
       }
       
       // Gamification Logic: Spawn a village crisis

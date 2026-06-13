@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Brain, History, Building2 } from 'lucide-react';
+import { Home, Brain, History, Building2, Presentation } from 'lucide-react';
 
 export default function Navigation() {
   const pathname = usePathname();
@@ -12,6 +12,7 @@ export default function Navigation() {
     { href: '/game', label: 'Village', icon: Building2 },
     { href: '/insights', label: 'AI Insights', icon: Brain },
     { href: '/history', label: 'History', icon: History },
+    { href: '/slideshow', label: 'Pitch', icon: Presentation },
   ];
 
   return (

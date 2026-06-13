@@ -27,8 +27,16 @@ export interface BurnoutInsight {
   timestamp: number;
 }
 
+export interface Session {
+  id: string;
+  type: TaskType;
+  durationMinutes: number;
+  completedAt: string;
+}
+
 interface AppState {
   tasks: Task[];
+  sessions: Session[];
   recentHistory: DayStats[];
   latestInsight: BurnoutInsight | null;
   insightHistory: BurnoutInsight[];
@@ -55,12 +63,17 @@ interface AppState {
   
   adjustBurnoutLimit: (changeMinutes: number) => void;
   setBurnoutTimeLimit: (minutes: number) => void;
+  addSession: (session: Session) => void;
+  deleteSession: (id: string) => void;
+  updateSession: (id: string, durationMinutes: number) => void;
+  generateMockSessions: () => void;
 }
 
 const getTodayDateString = () => new Date().toISOString().split('T')[0];
 
 export const useAppStore = create<AppState>((set) => ({
   tasks: [],
+  sessions: [],
   recentHistory: [
     { date: getTodayDateString(), focus_minutes: 0, recharge_minutes: 0, break_intervals: [] }
   ],
@@ -71,9 +84,30 @@ export const useAppStore = create<AppState>((set) => ({
   focusSeconds: 0,
   activeTaskId: null,
 
-  burnoutTimeLimit: 30, // Default 30 minutes
+  burnoutTimeLimit: 1, // Default 1 minute for testing
 
   addTask: (task) => set((state) => ({ tasks: [...state.tasks, task] })),
+  
+  addSession: (session) => set((state) => ({ sessions: [session, ...state.sessions] })),
+  
+  deleteSession: (id) => set((state) => ({ sessions: state.sessions.filter(s => s.id !== id) })),
+  
+  updateSession: (id, durationMinutes) => set((state) => ({
+    sessions: state.sessions.map(s => s.id === id ? { ...s, durationMinutes } : s)
+  })),
+
+  generateMockSessions: () => set((state) => {
+    const types: TaskType[] = ['Focus', 'Recharge'];
+    const mockSessions: Session[] = Array.from({ length: 5 }).map((_, i) => ({
+      id: `mock-${Date.now()}-${i}`,
+      type: types[Math.floor(Math.random() * types.length)],
+      durationMinutes: Math.floor(Math.random() * 45) + 15,
+      completedAt: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000).toISOString()
+    }));
+    // sort descending by completedAt
+    const combined = [...mockSessions, ...state.sessions].sort((a, b) => new Date(b.completedAt).getTime() - new Date(a.completedAt).getTime());
+    return { sessions: combined };
+  }),
   
   deleteTask: (id) => set((state) => ({ 
     tasks: state.tasks.filter(t => t.id !== id),

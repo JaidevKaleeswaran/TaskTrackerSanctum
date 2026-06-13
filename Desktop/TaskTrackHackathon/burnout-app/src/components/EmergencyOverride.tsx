@@ -1,13 +1,19 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppStore } from '@/store/useAppStore';
 
 export default function EmergencyOverride() {
   const { latestInsight, focusSeconds, isFocusing } = useAppStore();
+  const [isDismissed, setIsDismissed] = useState(false);
+
+  useEffect(() => {
+    setIsDismissed(false);
+  }, [latestInsight?.timestamp]);
 
   // Trigger if AI says score > 85, OR if they've been focusing for > 120 minutes without checking in
-  const isCritical = (latestInsight && latestInsight.burnout_score > 85) || (isFocusing && focusSeconds > 120 * 60);
+  const isCritical = !isDismissed && ((latestInsight && latestInsight.burnout_score > 85) || (isFocusing && focusSeconds > 120 * 60));
 
   return (
     <AnimatePresence>
@@ -74,6 +80,13 @@ export default function EmergencyOverride() {
                 <p className="text-gray-400 text-xs">Catch up with friends for a few minutes.</p>
               </a>
             </div>
+            
+            <button 
+              onClick={() => setIsDismissed(true)}
+              className="mt-8 text-gray-500 hover:text-white underline text-sm transition-colors"
+            >
+              I have finished my breathing exercise. Return to Dashboard.
+            </button>
           </div>
         </motion.div>
       )}

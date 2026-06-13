@@ -4,7 +4,7 @@ import { useAppStore } from '@/store/useAppStore';
 import { Activity } from 'lucide-react';
 
 export default function CheckEngineLight() {
-  const { latestInsight, focusSeconds } = useAppStore();
+  const { latestInsight, focusSeconds, burnoutTimeLimit } = useAppStore();
 
   let status: 'healthy' | 'warning' | 'critical' = 'healthy';
   let message = 'Mental state optimal.';
@@ -19,13 +19,13 @@ export default function CheckEngineLight() {
       message = 'Cognitive load rising. Consider a break soon.';
     }
   } 
-  // Fallback to time-based if no AI insight yet but they've been working long
-  else if (focusSeconds > 90 * 60) {
+  // Fallback to time-based dynamically using the stamina limit
+  else if (focusSeconds >= burnoutTimeLimit * 60) {
     status = 'critical';
-    message = 'You have been focusing for over 90 minutes. Check-in required.';
-  } else if (focusSeconds > 45 * 60) {
+    message = `Limit reached! You have been focusing for ${burnoutTimeLimit} minutes. Check-in required.`;
+  } else if (focusSeconds >= (burnoutTimeLimit - 5) * 60 && focusSeconds > 0) {
     status = 'warning';
-    message = '45+ minutes continuous focus. Check-in recommended.';
+    message = `Approaching burnout limit. Less than 5 minutes remaining.`;
   }
 
   const colors = {

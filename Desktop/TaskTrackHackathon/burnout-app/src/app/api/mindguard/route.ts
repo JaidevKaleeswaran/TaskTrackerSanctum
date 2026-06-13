@@ -44,8 +44,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Missing required payload fields" }, { status: 400 });
     }
 
-    const prompt = `Input Payload:
-${JSON.stringify(body, null, 2)}`;
+    const prompt = `Input Payload:\n${JSON.stringify(body, null, 2)}`;
 
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
