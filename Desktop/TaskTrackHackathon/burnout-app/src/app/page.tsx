@@ -44,7 +44,7 @@ export default function Dashboard() {
 
             {showCheckInTrigger && (
               <div className="text-center text-accent text-sm animate-pulse">
-                You completed a task! Please log a MindGuard check-in.
+                You completed a task! Please log an Aegis check-in.
               </div>
             )}
           </div>

@@ -23,7 +23,8 @@ import {
   Timer,
   Hammer,
   ShieldCheck,
-  ArrowRight
+  ArrowRight,
+  GraduationCap
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -37,16 +38,16 @@ interface Slide {
 }
 
 const SLIDES: Slide[] = [
-  { id: 'intro', title: 'MindGuard', subtitle: 'Work Healthy. Build Strong.' },
-  { id: 'problem', title: 'The Burnout Epidemic', subtitle: 'The Silent Killer of Modern Work & Study' },
-  { id: 'solution', title: 'The MindGuard Shield', subtitle: 'Three Layers of Prevention' },
-  { id: 'ai', title: 'AI Diagnostics (Gemini)', subtitle: 'Mood & Trajectory Insights' },
-  { id: 'breathing', title: 'Emergency Override', subtitle: 'Enforced Decompression' },
-  { id: 'village', title: 'Gamified Motivation', subtitle: 'Tasks as Building Blocks' },
-  { id: 'crises', title: 'Village Crises', subtitle: 'Gamifying Health Consequences' },
-  { id: 'raids', title: 'War Room Raids', subtitle: 'Risk vs. Reward Strategy' },
-  { id: 'stack', title: 'Technical Stack', subtitle: 'Modern Web Architecture' },
-  { id: 'conclusion', title: 'The Wellness Standard', subtitle: 'Healthy Minds Build Stronger Villages' },
+  { id: 'intro', title: 'Aegis', subtitle: 'Learn the Art of Pacing.' },
+  { id: 'problem', title: 'The Stress Blindspot', subtitle: 'The Pacing Deficit in Modern Work' },
+  { id: 'solution', title: 'Experiential Pacing', subtitle: 'A Three-Tiered Learning Engine' },
+  { id: 'ai', title: 'AI Pacing Mentor', subtitle: 'Gemini-Powered Stress Reflection' },
+  { id: 'breathing', title: 'Interactive Somatic Training', subtitle: 'Portable Regulation Tutorials' },
+  { id: 'village', title: 'Simulated Resource Budgeting', subtitle: 'Balancing Rest & Productivity' },
+  { id: 'crises', title: 'Consequence Simulation', subtitle: 'Learning the Cost of Exhaustion' },
+  { id: 'raids', title: 'Strategic Risk Training', subtitle: 'Probability & Risk Management' },
+  { id: 'stack', title: 'Technical Architecture', subtitle: 'Engineering the Learning Engine' },
+  { id: 'conclusion', title: 'The Pacing Standard', subtitle: 'Continuous Wellness Learning' },
 ];
 
 export default function Slideshow() {
@@ -243,15 +244,15 @@ export default function Slideshow() {
               className="relative mb-6"
             >
               <div className="absolute inset-0 bg-yellow-400/20 rounded-full blur-3xl w-48 h-48 mx-auto -z-10" />
-              <BrainCircuit className="text-accent w-24 h-24 mx-auto mb-4 drop-shadow-[0_0_15px_rgba(255,215,0,0.5)]" />
+              <GraduationCap className="text-accent w-24 h-24 mx-auto mb-4 drop-shadow-[0_0_15px_rgba(255,215,0,0.5)]" />
             </motion.div>
             
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white mb-4">
-              Mind<span className="text-accent">Guard.</span>
+              Ae<span className="text-accent">gis.</span>
             </h1>
             
             <p className="text-lg md:text-2xl text-gray-400 font-medium max-w-2xl mb-8 leading-relaxed">
-              Gamified Task Management & AI-Driven Burnout Prevention
+              An Interactive Learning Platform for Stress Management & Pacing
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mt-2">
@@ -259,13 +260,13 @@ export default function Slideshow() {
                 onClick={() => setIsImmersive(true)}
                 className="bg-accent text-black font-semibold px-8 py-3.5 rounded-xl hover:bg-yellow-400 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,215,0,0.3)] cursor-pointer"
               >
-                <Play size={18} fill="currentColor" /> Start Pitch
+                <Play size={18} fill="currentColor" /> Start Interactive Presentation
               </button>
               <Link
                 href="/"
                 className="bg-transparent border border-gray-800 text-gray-300 font-medium px-8 py-3.5 rounded-xl hover:bg-gray-900 hover:border-gray-700 transition-all text-center flex items-center justify-center gap-2"
               >
-                Dashboard <ArrowRight size={16} />
+                Go to App <ArrowRight size={16} />
               </Link>
             </div>
 
@@ -280,26 +281,26 @@ export default function Slideshow() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center h-full max-w-4xl mx-auto px-4">
             <div className="space-y-6 text-left">
               <div className="inline-flex items-center gap-2 bg-red-950/40 border border-red-900/60 px-3 py-1.5 rounded-full text-red-400 text-xs font-semibold uppercase tracking-wider">
-                <Flame size={14} className="animate-pulse" /> The Issue
+                <Flame size={14} className="animate-pulse" /> The Pacing Deficit
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-white leading-tight">
-                The Silent Workplace Epidemic: Burnout
+                Why We Fail to Manage Stress
               </h2>
               <p className="text-gray-450 leading-relaxed text-sm md:text-base">
-                High performers operate in highly pressurized environments. Compressed deadlines, constant context switching, and complex problem-solving demand relentless focus.
+                Burnout is not a failure of willpower; it is a **failure of education**. In modern work and study environments, we are never taught how to pace ourselves.
               </p>
               <ul className="space-y-3.5 text-sm text-gray-300">
                 <li className="flex items-start gap-2.5">
                   <XCircle className="text-red-500 shrink-0 mt-0.5" size={18} />
-                  <span><strong>Invisible Fatigue:</strong> Classic task managers track work done, but completely ignore your energy baseline.</span>
+                  <span><strong>Lack of Awareness:</strong> Most individuals cannot recognize their own early cognitive fatigue markers.</span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <XCircle className="text-red-500 shrink-0 mt-0.5" size={18} />
-                  <span><strong>Cognitive Friction:</strong> Fatigue spikes analytical errors, degrades focus clarity, and compounds cognitive mistakes.</span>
+                  <span><strong>Static Checklists:</strong> Standard task managers encourage checking off boxes endlessly, completely ignoring energy levels.</span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <XCircle className="text-red-500 shrink-0 mt-0.5" size={18} />
-                  <span><strong>Delayed Relief:</strong> High-performers only stop when they hit total exhaustion, resulting in days of lost momentum.</span>
+                  <span><strong>Abstract Consequences:</strong> We treat rest as optional because the negative effects of stress are invisible until we crash.</span>
                 </li>
               </ul>
             </div>
@@ -308,27 +309,20 @@ export default function Slideshow() {
               <div className="absolute top-0 right-0 w-24 h-24 bg-red-500/5 rounded-full blur-2xl" />
               
               <div className="flex items-center justify-between border-b border-gray-800 pb-4">
-                <span className="text-gray-400 font-mono text-xs">DIAGNOSTIC STATUS</span>
+                <span className="text-gray-450 font-mono text-xs">PRACTICAL PROBLEM</span>
                 <span className="text-red-500 text-xs font-bold animate-pulse flex items-center gap-1">
-                  CRITICAL OVERLOAD
+                  IGNORING SIGNS
                 </span>
               </div>
 
               <div className="space-y-4 text-left">
-                <div>
-                  <div className="flex justify-between text-xs mb-1">
-                    <span className="text-gray-500">Cognitive Load Factor</span>
-                    <span className="text-red-400 font-semibold">92%</span>
-                  </div>
-                  <div className="w-full bg-gray-900 h-2.5 rounded-full overflow-hidden">
-                    <div className="bg-gradient-to-r from-red-500 to-amber-500 h-full rounded-full w-[92%]" />
-                  </div>
-                </div>
-
+                <p className="text-xs text-gray-300 leading-relaxed">
+                  We treat cognitive batteries like infinite resources. Without real-time diagnostic feedback, users keep pushing past safety lines, resulting in compounding errors and physical exhaustion.
+                </p>
                 <div className="bg-red-950/20 border-l-4 border-red-500 p-3 rounded-r-lg">
-                  <p className="text-xs text-red-400 font-semibold mb-1">Burnout Cascade Triggered</p>
-                  <p className="text-xs text-gray-450 leading-normal">
-                    AI detects syntax patterns slowing down, repeated deletes, and continuous focus logs. Wellness rating: F.
+                  <p className="text-xs text-red-400 font-semibold mb-0.5">The Lesson</p>
+                  <p className="text-[11px] text-gray-400 leading-normal">
+                    Pacing must be taught **experientially**. Users need to see the correlation between overwork, performance drops, and recovery times.
                   </p>
                 </div>
               </div>
@@ -341,13 +335,13 @@ export default function Slideshow() {
           <div className="flex flex-col justify-center h-full max-w-4xl mx-auto px-4">
             <div className="text-center mb-8">
               <div className="inline-flex items-center gap-2 bg-emerald-950/40 border border-emerald-900/60 px-3 py-1.5 rounded-full text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-3">
-                <Sparkles size={14} /> The Innovation
+                <Sparkles size={14} /> The Learning Loop
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-white">
-                Introducing MindGuard
+                The Experiential Pacing Engine
               </h2>
-              <p className="text-gray-450 text-sm mt-2 max-w-lg mx-auto">
-                A wellness-first task tracker pairing cognitive analytics with retro village expansion.
+              <p className="text-gray-455 text-sm mt-2 max-w-lg mx-auto">
+                Aegis solves burnout by transforming mental pacing into an interactive, simulated curriculum.
               </p>
             </div>
 
@@ -355,21 +349,21 @@ export default function Slideshow() {
               {[
                 {
                   icon: Activity,
-                  title: "1. Smart Diagnostics",
+                  title: "1. Diagnostic Awareness",
                   color: "text-blue-400 bg-blue-950/20 border-blue-900/50",
-                  desc: "Categorizes tasks as Focus or Recharge. Tracks work intervals to calculate real-time strain indicators."
+                  desc: "Teaches users to separate Focus (high energy) and Recharge (reloading energy) tasks, tracking daily strain levels visually."
                 },
                 {
                   icon: BrainCircuit,
-                  title: "2. Gemini Insights",
-                  color: "text-amber-400 bg-amber-950/20 border-amber-900/50",
-                  desc: "Semantic logs analyzed by Gemini to evaluate sentiment, track score trajectories, and trigger village events."
+                  title: "2. Guided Reflections",
+                  color: "text-purple-400 bg-purple-950/20 border-purple-900/50",
+                  desc: "Gemini AI analyzes mood updates, teaching users to identify recurring stress patterns and prescribing personalized advice."
                 },
                 {
                   icon: HeartPulse,
-                  title: "3. Action Interventions",
+                  title: "3. Somatic Practice",
                   color: "text-emerald-400 bg-emerald-950/20 border-emerald-900/50",
-                  desc: "Emergency box-breathing locks when burnout spikes, forcing immediate decompression to recover your pace."
+                  desc: "Forces breaks when danger thresholds are crossed, training users in box breathing methods to reset their nervous system."
                 }
               ].map((card, i) => (
                 <div key={i} className={`p-5 rounded-xl border ${card.color} bg-opacity-30 backdrop-blur-sm flex flex-col gap-3 hover:scale-[1.02] transition-transform`}>
@@ -387,26 +381,26 @@ export default function Slideshow() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center h-full max-w-4xl mx-auto px-4">
             <div className="space-y-6 text-left">
               <div className="inline-flex items-center gap-2 bg-purple-950/40 border border-purple-900/60 px-3 py-1.5 rounded-full text-purple-400 text-xs font-semibold uppercase tracking-wider">
-                <BrainCircuit size={14} /> AI Engine
+                <BrainCircuit size={14} /> AI Pacing Mentor
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-white leading-tight">
-                Deep Semantic Sentiment Analysis
+                Self-Reflective Diagnostics
               </h2>
               <p className="text-gray-450 leading-relaxed text-sm">
-                Integrates directly with the latest Google Gemini API models to analyze user journal updates.
+                Aegis uses Gemini AI to turn text journals into learning moments. Instead of arbitrary metrics, users receive qualitative feedback on their mood trends.
               </p>
               <ul className="space-y-3 text-xs text-gray-300">
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="text-purple-400 shrink-0" size={16} />
-                  <span>Checks emotional undertones to pinpoint stress curves.</span>
+                  <span><strong>Sentiment Analysis:</strong> Identifies underlying emotional stress (fatigue, anxiety, focus).</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="text-purple-400 shrink-0" size={16} />
-                  <span>Translates journal reflections into numeric Burnout Scores.</span>
+                  <span><strong>Stress Quantifying:</strong> Helps users connect physical feelings to a concrete 0-100 Burnout Score.</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="text-purple-400 shrink-0" size={16} />
-                  <span>Synthesizes dynamic text suggestions to improve mental hygiene.</span>
+                  <span><strong>Behavioral Prompts:</strong> Suggests specific pacing changes (e.g. taking a walk, changing tasks).</span>
                 </li>
               </ul>
             </div>
@@ -414,7 +408,7 @@ export default function Slideshow() {
             <div className="bg-[#121212] p-5 rounded-2xl border border-gray-800 shadow-xl flex flex-col gap-4 text-left">
               <div className="flex items-center gap-2 border-b border-gray-800 pb-3">
                 <BrainCircuit size={18} className="text-accent" />
-                <span className="font-bold text-white text-sm">MindGuard Gemini Audit</span>
+                <span className="font-bold text-white text-sm">Gemini Pacing Reflection</span>
               </div>
               
               <div className="bg-black/60 p-3 rounded-lg border border-gray-800">
@@ -434,7 +428,7 @@ export default function Slideshow() {
                   <span className="text-red-500 font-bold font-mono">78 / 100</span>
                 </div>
                 <div className="p-3 bg-accent/5 rounded border border-accent/20">
-                  <span className="text-accent font-semibold block mb-0.5 text-[11px]">GEMINI DIRECTIVE</span>
+                  <span className="text-accent font-semibold block mb-0.5 text-[11px]">GEMINI PACING DIRECTIVE</span>
                   <p className="text-gray-300 leading-normal text-[11px]">
                     Step away from the screen. Walk for 5 minutes and drink water. Do not push yourself further in this state.
                   </p>
@@ -449,26 +443,26 @@ export default function Slideshow() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center h-full max-w-4xl mx-auto px-4">
             <div className="space-y-6 text-left">
               <div className="inline-flex items-center gap-2 bg-emerald-950/40 border border-emerald-900/60 px-3 py-1.5 rounded-full text-emerald-400 text-xs font-semibold uppercase tracking-wider">
-                <HeartPulse size={14} /> Emergency Override
+                <HeartPulse size={14} /> Somatic Training
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-white leading-tight">
-                Enforced Wellness Decompression
+                Paced Decompression Exercises
               </h2>
               <p className="text-gray-450 text-sm leading-relaxed">
-                When cognitive stress crosses the **Danger Line**, MindGuard triggers a mandatory lock screen. Work is frozen. Paced breathing is activated.
+                When cognitive fatigue spikes, the application enforces a lock screen. This teaches users how to use paced breathing to quickly decrease heart rate variability and mental friction.
               </p>
               <ul className="space-y-3.5 text-xs text-gray-300">
                 <li className="flex items-start gap-2.5">
                   <CheckCircle2 className="text-emerald-400 shrink-0 mt-0.5" size={16} />
-                  <span><strong>Locked Panels:</strong> All task management modules are disabled until breathing cycle completion.</span>
+                  <span><strong>Tactile Pacing:</strong> Guided visual ring expands and contracts, establishing a clean 4-4-4-4 breathing habit.</span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <CheckCircle2 className="text-emerald-400 shrink-0 mt-0.5" size={16} />
-                  <span><strong>Box Breathing (4-4-4-4):</strong> Guided pacing ring helps calm the nervous system.</span>
+                  <span><strong>Locked Boundary:</strong> Prevents users from returning to stress-inducing panels until they finish the pacing sequence.</span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <CheckCircle2 className="text-emerald-400 shrink-0 mt-0.5" size={16} />
-                  <span><strong>Heart Recovery:</strong> Forces physical detachment from the workspace, preventing emotional exhaustion.</span>
+                  <span><strong>Habit Formation:</strong> Repeating this brief exercise forms a portable stress-relief routine users can utilize offline.</span>
                 </li>
               </ul>
             </div>
@@ -476,10 +470,10 @@ export default function Slideshow() {
             {/* Interactive Breathing Simulation */}
             <div className="bg-[#121212] p-6 rounded-2xl border border-gray-800 flex flex-col items-center justify-center text-center gap-6 relative overflow-hidden min-h-[300px]">
               <div className="absolute top-2 left-2 text-[10px] text-gray-500 font-mono bg-black/60 border border-gray-900 px-2 py-0.5 rounded">
-                DEMO WIDGET
+                INTERACTIVE TUTORIAL
               </div>
               
-              <h3 className="text-sm font-bold text-white">Box Breathing Visualizer</h3>
+              <h3 className="text-sm font-bold text-white font-mono">Box Breathing Practice</h3>
               
               <div className="relative w-36 h-36 flex items-center justify-center">
                 {/* Breathing ring */}
@@ -519,7 +513,7 @@ export default function Slideshow() {
                     : 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 shadow-[0_0_15px_rgba(16,185,129,0.1)]'
                 }`}
               >
-                {breathActive ? 'Pause Demo' : 'Run Paced Breathing'}
+                {breathActive ? 'Pause Lesson' : 'Start Paced Breathing Tutorial'}
               </button>
             </div>
           </div>
@@ -530,39 +524,39 @@ export default function Slideshow() {
           <div className="flex flex-col justify-center h-full max-w-4xl mx-auto px-4">
             <div className="text-center mb-6">
               <div className="inline-flex items-center gap-2 bg-yellow-950/40 border border-yellow-900/60 px-3 py-1.5 rounded-full text-accent text-xs font-semibold uppercase tracking-wider mb-2">
-                <Sparkles size={14} /> Gamification
+                <Sparkles size={14} /> Simulated Feedback
               </div>
-              <h2 className="text-3xl font-bold text-white">Gamified Motivation Engine</h2>
+              <h2 className="text-3xl font-bold text-white">Learning Resource Management</h2>
               <p className="text-gray-455 text-xs mt-1">
-                Your real-world accomplishments power your digital village. Spend task cash to build & expand.
+                Completing focus and recharge tasks earns resources to construct a village. This models the balance of workload and rest.
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5 text-left">
               {[
                 {
-                  title: "Wheat Farms",
-                  tagline: "🌾 Growth Base",
-                  stat: "+2 Population per min",
+                  title: "Farms (Population)",
+                  tagline: "🌾 Rest Base",
+                  stat: "Fuels Village Growth",
                   cost: "100 Gold",
                   color: "border-yellow-900/50 hover:shadow-yellow-900/10 bg-yellow-950/10",
-                  desc: "Supports population capacity. Increases your overall village growth potential."
+                  desc: "Farms represent population foundation. Complete task goals to earn currency to fund these expansions."
                 },
                 {
-                  title: "Gold Markets",
-                  tagline: "🪙 Economic Engine",
-                  stat: "+5 Gold per min",
+                  title: "Markets (Economy)",
+                  tagline: "🪙 Active Revenue",
+                  stat: "Teaches Economic Pacing",
                   cost: "150 Gold",
                   color: "border-amber-900/50 hover:shadow-amber-900/10 bg-amber-950/10",
-                  desc: "Generates passive gold. Completing tasks boosts this revenue curve."
+                  desc: "Generates passive gold. Illustrates how productivity spikes the revenue curve, but requires safety buffers."
                 },
                 {
-                  title: "Guard Towers",
-                  tagline: "🏹 War Defense",
-                  stat: "+15% Raid Safety Factor",
+                  title: "Towers (Defense)",
+                  tagline: "🏹 Risk Management",
+                  stat: "Boosts Security Rating",
                   cost: "250 Gold",
                   color: "border-blue-900/50 hover:shadow-blue-900/10 bg-blue-950/10",
-                  desc: "Protects against damage. Boosts tactical advantage during Village Raids."
+                  desc: "Protects buildings and raises victory chances in raids, demonstrating how security upgrades reduce risk."
                 }
               ].map((b, idx) => (
                 <div key={idx} className={`p-4 rounded-xl border ${b.color} bg-black/40 hover:scale-[1.01] transition-all flex flex-col justify-between`}>
@@ -588,26 +582,26 @@ export default function Slideshow() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center h-full max-w-4xl mx-auto px-4">
             <div className="space-y-6 text-left">
               <div className="inline-flex items-center gap-2 bg-orange-950/40 border border-orange-900/60 px-3 py-1.5 rounded-full text-orange-400 text-xs font-semibold uppercase tracking-wider">
-                <ShieldAlert size={14} className="animate-pulse" /> Wellness Consequence
+                <ShieldAlert size={14} className="animate-pulse" /> Consequence Simulation
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-white leading-tight">
-                AI Village Crises
+                Simulating Burnout Tolls
               </h2>
-              <p className="text-gray-450 text-sm leading-relaxed">
-                If you push through burnout and ignore check-in warnings, Gemini-triggered crises hit your village:
+              <p className="text-gray-455 text-sm leading-relaxed">
+                If the user ignores warning levels and pushes cognitive limits, Gemini-generated crises hit the village. This teaches users that **unmanaged stress has real, disruptive consequences**.
               </p>
               <ul className="space-y-3.5 text-xs text-gray-300">
                 <li className="flex items-start gap-2.5">
                   <XCircle className="text-orange-500 shrink-0 mt-0.5" size={16} />
-                  <span><strong>Structural Damage:</strong> Collapsing roofs decrease economy outputs by 50%.</span>
+                  <span><strong>Simulated Fallout:</strong> Events like worker strikes freeze village gold production, showing that burnout halts progress.</span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <XCircle className="text-orange-500 shrink-0 mt-0.5" size={16} />
-                  <span><strong>Supply Shortage:</strong> Worker fatigue halts active income and stops progression.</span>
+                  <span><strong>Building Degradation:</strong> Crises damage structures (dropping building HP), forcing users to spend resources on repairs.</span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <XCircle className="text-orange-500 shrink-0 mt-0.5" size={16} />
-                  <span><strong>Active Repair Loop:</strong> Must log wellness actions or spend Gold to fix buildings before they collapse.</span>
+                  <span><strong>Recharge Connection:</strong> Repairs cost money, but completing a Recharge task cools the AI crisis engine down immediately.</span>
                 </li>
               </ul>
             </div>
@@ -617,14 +611,14 @@ export default function Slideshow() {
               
               <div className="flex items-center justify-between border-b border-gray-800 pb-3">
                 <span className="text-orange-500 text-xs font-bold flex items-center gap-1">
-                  ⚠️ AI EVENT TRIGGERED
+                  ⚠️ SIMULATED CRISIS active
                 </span>
-                <span className="text-[10px] text-gray-500 font-mono">CRISIS WARNING</span>
+                <span className="text-[10px] text-gray-500 font-mono">CONSEQUENCE FEEDBACK</span>
               </div>
 
               <div className="p-3 bg-orange-950/20 border border-orange-900/30 rounded text-center">
                 <p className="text-xs text-orange-400 font-bold">EVENT: LABOR STRIKE</p>
-                <p className="text-[10px] text-gray-450 mt-1 leading-normal">
+                <p className="text-[10px] text-gray-455 mt-1 leading-normal font-mono">
                   "Due to user exhaustion, farm workers have walked out. Store yields are frozen until recharge completed."
                 </p>
               </div>
@@ -642,10 +636,10 @@ export default function Slideshow() {
 
                 <div className="flex gap-2 mt-2">
                   <div className="flex-1 bg-amber-500/10 text-amber-400 border border-amber-500/30 rounded py-2 text-[10px] font-bold text-center flex items-center justify-center gap-1">
-                    <Hammer size={12} /> Repair (50 Gold)
+                    <Hammer size={12} /> Pay repair costs (50g)
                   </div>
                   <div className="flex-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded py-2 text-[10px] font-bold text-center flex items-center justify-center gap-1">
-                    <Timer size={12} /> Complete Recharge
+                    <Timer size={12} /> Log Recharge Task (Free)
                   </div>
                 </div>
               </div>
@@ -661,23 +655,23 @@ export default function Slideshow() {
                 <Swords size={14} /> War Room
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-white leading-tight">
-                Village Raiding Mechanics
+                Risk Management Training
               </h2>
               <p className="text-gray-455 text-sm leading-relaxed">
-                Take tactical risks! Launch raids against nearby towns for gold, using your population and defense to skew the odds.
+                Raiding introduces probability estimation. Users learn that taking massive risks without defensive upgrades (Guard Towers) leads to loss of resources.
               </p>
               <ul className="space-y-3 text-xs text-gray-300">
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="text-indigo-400 shrink-0" size={16} />
-                  <span><strong>Raid Tiers:</strong> Small Settlement, Fortified Town, and The Citadel.</span>
+                  <span><strong>Calculated Risks:</strong> Displays win probability dynamically before committing resources.</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="text-indigo-400 shrink-0" size={16} />
-                  <span><strong>Tactical Boost:</strong> Population and Guard Towers raise success probability.</span>
+                  <span><strong>Strategic Preparation:</strong> Upgrade Guard Towers and population to boost win probability.</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="text-indigo-400 shrink-0" size={16} />
-                  <span><strong>Risk Outcomes:</strong> Failure drains cash reserves and inflicts random building damage.</span>
+                  <span><strong>Teaches Resilience:</strong> Raid defeats damage buildings, training users to maintain reserve funds.</span>
                 </li>
               </ul>
             </div>
@@ -685,11 +679,11 @@ export default function Slideshow() {
             {/* Live Interactive Raid Simulator */}
             <div className="bg-[#121212] p-5 rounded-2xl border border-gray-800 flex flex-col gap-4 relative overflow-hidden min-h-[300px] justify-between text-left">
               <div className="absolute top-2 left-2 text-[10px] text-gray-500 font-mono bg-black/60 border border-gray-900 px-2 py-0.5 rounded">
-                SIMULATOR WIDGET
+                SIMULATOR TUTORIAL
               </div>
 
               <div className="text-center pt-2">
-                <h3 className="text-sm font-bold text-white">Raid Command Room</h3>
+                <h3 className="text-sm font-bold text-white">Raid Risk Evaluator</h3>
               </div>
 
               {raidStatus === 'idle' && (
@@ -712,20 +706,20 @@ export default function Slideshow() {
 
                   <div className="bg-black/60 p-3 rounded-lg border border-gray-950 flex flex-col gap-1.5 text-xs">
                     <div className="flex justify-between">
-                      <span className="text-gray-400">Target:</span>
+                      <span className="text-gray-400">Target Type:</span>
                       <span className="text-white font-bold capitalize">
                         {raidDifficulty === 'easy' ? 'Small Settlement' : raidDifficulty === 'medium' ? 'Fortified Town' : 'The Citadel'}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-400">Victory Probability:</span>
+                      <span className="text-gray-400">Calculated Win Odds:</span>
                       <span className="text-indigo-400 font-bold font-mono">{raidChance}%</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-400">Raid Reward/Risk:</span>
+                      <span className="text-gray-400">Risk vs Reward:</span>
                       <span className="text-emerald-400 font-mono font-semibold">
                         +{raidDifficulty === 'easy' ? '200' : raidDifficulty === 'medium' ? '500' : '1500'}{' '}
-                        <span className="text-red-400">
+                        <span className="text-red-400 font-semibold">
                           /-{raidDifficulty === 'easy' ? '50' : raidDifficulty === 'medium' ? '150' : '400'}
                         </span>
                       </span>
@@ -736,7 +730,7 @@ export default function Slideshow() {
                     onClick={runMockRaid}
                     className="w-full bg-indigo-500 hover:bg-indigo-400 text-white font-bold py-2.5 rounded-lg text-xs transition-all shadow-[0_0_15px_rgba(99,102,241,0.2)] cursor-pointer"
                   >
-                    🚀 Launch Raid!
+                    🎲 Test Risk Decision
                   </button>
                 </div>
               )}
@@ -744,8 +738,8 @@ export default function Slideshow() {
               {raidStatus === 'raiding' && (
                 <div className="flex flex-col items-center justify-center py-6 gap-3">
                   <RefreshCw className="animate-spin text-indigo-400 w-10 h-10" />
-                  <p className="text-xs text-gray-450 font-mono animate-pulse">
-                    Clashing shields... marching battalions...
+                  <p className="text-xs text-gray-455 font-mono animate-pulse">
+                    Rolling probability parameters...
                   </p>
                 </div>
               )}
@@ -758,9 +752,9 @@ export default function Slideshow() {
                         <ShieldCheck size={28} />
                       </div>
                       <div>
-                        <h4 className="text-sm font-bold text-white">RAID VICTORY!</h4>
+                        <h4 className="text-sm font-bold text-white">DECISION RESULT: SUCCESS</h4>
                         <p className="text-xs text-emerald-400 font-mono font-bold mt-1">
-                          +{raidResultGold} Gold Plundered!
+                          Earned +{raidResultGold} Gold reserves.
                         </p>
                       </div>
                     </>
@@ -770,9 +764,9 @@ export default function Slideshow() {
                         <XCircle size={28} />
                       </div>
                       <div>
-                        <h4 className="text-sm font-bold text-white">RAID DEFEAT</h4>
+                        <h4 className="text-sm font-bold text-white">DECISION RESULT: FAILED</h4>
                         <p className="text-xs text-red-400 font-mono font-bold mt-1">
-                          -{raidResultGold} Gold Lost & building damaged!
+                          Lost -{raidResultGold} Gold; buildings damaged!
                         </p>
                       </div>
                     </>
@@ -782,7 +776,7 @@ export default function Slideshow() {
                     onClick={() => setRaidStatus('idle')}
                     className="mt-2 bg-gray-900 border border-gray-800 text-gray-400 hover:text-white px-4 py-1.5 rounded text-[10px] font-bold cursor-pointer"
                   >
-                    Return to Map
+                    Adjust Risk Strategy
                   </button>
                 </div>
               )}
@@ -837,7 +831,7 @@ export default function Slideshow() {
             </h2>
 
             <p className="text-base md:text-lg text-gray-405 max-w-xl mb-8 leading-relaxed">
-              By aligning cognitive well-being with fun progression systems, MindGuard shifts wellness from a chore into a core mechanic.
+              By replacing boring checklists with simulation feedback loops, Aegis transitions wellness from a set of rules into an engaging, interactive learning environment.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
@@ -845,7 +839,7 @@ export default function Slideshow() {
                 href="/"
                 className="bg-accent text-black font-semibold px-8 py-3 rounded-xl hover:bg-yellow-400 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,215,0,0.2)]"
               >
-                Go to Dashboard
+                Explore the Application
               </Link>
               <button
                 onClick={() => {
@@ -875,7 +869,7 @@ export default function Slideshow() {
         <div className="absolute top-6 left-8 right-8 flex justify-between items-center text-gray-500 font-mono text-xs z-20">
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-accent animate-pulse" />
-            <span className="text-white font-bold tracking-wider">MINDGUARD PRESENTATION</span>
+            <span className="text-white font-bold tracking-wider">AEGIS LEARNING SYSTEM</span>
           </div>
           <div className="flex items-center gap-6">
             <span>Slide {currentSlideIndex + 1} of {SLIDES.length}</span>

@@ -18,7 +18,7 @@ export default function Navigation() {
   return (
     <nav className="w-full bg-surface border-b border-gray-800 p-4 z-50">
       <div className="max-w-4xl mx-auto flex justify-between items-center px-4">
-        <h1 className="text-accent font-bold text-xl hidden md:block">MindGuard.</h1>
+        <h1 className="text-accent font-bold text-xl hidden md:block">Aegis.</h1>
         <div className="flex w-full md:w-auto justify-between md:gap-8">
           {links.map(({ href, label, icon: Icon }) => {
             const isActive = pathname === href;

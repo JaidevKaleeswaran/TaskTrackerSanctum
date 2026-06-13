@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "MindGuard | Burnout Prevention",
+  title: "Aegis | Burnout Prevention",
   description: "A minimalist task tracker designed to prevent student burnout.",
 };
 

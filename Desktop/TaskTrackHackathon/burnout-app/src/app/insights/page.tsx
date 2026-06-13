@@ -28,7 +28,7 @@ export default function AIInsights() {
           <BrainCircuit className="text-accent" size={32} />
           AI Insights
         </h1>
-        <p className="text-gray-400 mt-2">Your cognitive load and burnout trends, analyzed by MindGuard.</p>
+        <p className="text-gray-400 mt-2">Your cognitive load and burnout trends, analyzed by Aegis.</p>
       </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1">
@@ -76,7 +76,7 @@ export default function AIInsights() {
               <div className="flex flex-col items-center justify-center h-48 text-center text-gray-500">
                 <AlertCircle size={32} className="mb-3 opacity-50" />
                 <p>No data yet.</p>
-                <p className="text-sm mt-1">Complete a MindGuard check-in on the dashboard to generate insights.</p>
+                <p className="text-sm mt-1">Complete an Aegis check-in on the dashboard to generate insights.</p>
               </div>
             )}
           </div>

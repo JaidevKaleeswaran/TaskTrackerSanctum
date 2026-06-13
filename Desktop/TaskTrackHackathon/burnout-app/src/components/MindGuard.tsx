@@ -81,7 +81,7 @@ export default function MindGuard() {
     <div className="bg-surface p-6 rounded-2xl border border-gray-800 shadow-xl">
       <div className="flex items-center gap-3 mb-4">
         <Brain className="text-accent" size={24} />
-        <h3 className="text-lg font-bold text-white">MindGuard Check-in</h3>
+        <h3 className="text-lg font-bold text-white">Aegis Check-in</h3>
       </div>
       
       <p className="text-sm text-gray-400 mb-4">
