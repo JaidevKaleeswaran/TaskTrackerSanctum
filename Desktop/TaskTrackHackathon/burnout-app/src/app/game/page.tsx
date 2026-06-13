@@ -136,7 +136,7 @@ export default function GameTab() {
         {/* Left Column: Visual Map (Top) & Status + Raids Panels (Bottom) */}
         <div className="xl:col-span-8 flex flex-col gap-6">
           {/* Visual Engine (Top Canvas) */}
-          <main className="w-full h-[480px] relative">
+          <main className="w-full h-[620px] relative">
             <VillageCanvas />
           </main>
 
@@ -294,7 +294,7 @@ export default function GameTab() {
         {/* Right Column: Treasury & Upgrade Shop */}
         <div className="xl:col-span-4 flex flex-col gap-6">
           
-          <div className="bg-surface rounded-2xl p-5 border border-gray-800 shadow-xl flex flex-col justify-between h-full min-h-[734px]">
+          <div className="bg-surface rounded-2xl p-5 border border-gray-800 shadow-xl flex flex-col justify-between h-full min-h-[874px]">
             <div>
               <div className="flex items-center justify-between mb-4 border-b border-gray-800/80 pb-3">
                 <div>
