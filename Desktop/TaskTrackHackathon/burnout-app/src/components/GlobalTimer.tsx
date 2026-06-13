@@ -1,27 +1,16 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
-import { usePathname } from 'next/navigation';
 import { useAppStore } from '@/store/useAppStore';
 import { Play, Pause, Square } from 'lucide-react';
 import BreakPromptModal from '@/components/BreakPromptModal';
+import { motion } from 'framer-motion';
 
 export default function GlobalTimer() {
-  const pathname = usePathname();
   const { isFocusing, focusSeconds, setIsFocusing, setFocusSeconds, resetTimer, updateStats, burnoutTimeLimit } = useAppStore();
   const [showBreakPrompt, setShowBreakPrompt] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const lastPingedThreshold = useRef<number>(0);
-
-  // Reset timer on tab change
-  useEffect(() => {
-    if (focusSeconds > 0) {
-      updateStats('Focus', Math.round(focusSeconds / 60));
-    }
-    resetTimer();
-    setShowBreakPrompt(false);
-    lastPingedThreshold.current = 0;
-  }, [pathname, resetTimer, updateStats]);
 
   // Stopwatch Logic
   useEffect(() => {
@@ -85,7 +74,13 @@ export default function GlobalTimer() {
     <>
       <BreakPromptModal isOpen={showBreakPrompt} onClose={() => setShowBreakPrompt(false)} />
 
-      <div className="fixed top-4 right-4 z-40 flex items-center bg-surface border border-gray-800 shadow-2xl rounded-full p-2 pr-4 gap-3 animate-in fade-in slide-in-from-top-4">
+      <motion.div 
+        drag
+        dragMomentum={false}
+        dragElastic={0.05}
+        whileDrag={{ scale: 1.05 }}
+        className="fixed top-4 right-4 z-40 flex items-center bg-surface border border-gray-800 shadow-2xl rounded-full p-2 pr-4 gap-3 cursor-grab active:cursor-grabbing select-none animate-in fade-in slide-in-from-top-4"
+      >
         <div className="flex items-center gap-1">
           <button 
             onClick={handlePausePlay}
@@ -109,7 +104,7 @@ export default function GlobalTimer() {
             {formatTime(focusSeconds)}
           </span>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 }
