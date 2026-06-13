@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import TaskTracker from '@/components/TaskTracker';
 import MindGuard from '@/components/MindGuard';
-import CheckEngineLight from '@/components/CheckEngineLight';
 import EmergencyOverride from '@/components/EmergencyOverride';
 import { useAppStore } from '@/store/useAppStore';
 
@@ -34,10 +33,8 @@ export default function Dashboard() {
             <TaskTracker onTaskComplete={handleTaskComplete} />
           </div>
 
-          {/* Right Column: Check Engine & AI */}
+          {/* Right Column: AI Check-in */}
           <div className="lg:col-span-4 flex flex-col gap-6">
-            <CheckEngineLight />
-            
             <div className={`transition-all duration-500 ${showCheckInTrigger ? 'scale-105 shadow-[0_0_20px_rgba(255,215,0,0.2)] rounded-2xl' : ''}`}>
               <MindGuard />
             </div>

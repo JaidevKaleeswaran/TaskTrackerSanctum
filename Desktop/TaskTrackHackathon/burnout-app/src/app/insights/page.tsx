@@ -28,7 +28,7 @@ export default function AIInsights() {
           <BrainCircuit className="text-accent" size={32} />
           AI Insights
         </h1>
-        <p className="text-gray-400 mt-2">Your cognitive load and burnout trends, analyzed by Aegis.</p>
+        <p className="text-gray-400 mt-2">Your cognitive load and condition trends, analyzed by Aegis.</p>
       </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1">
@@ -45,7 +45,7 @@ export default function AIInsights() {
             {latestInsight ? (
               <div className="space-y-6">
                 <div>
-                  <p className="text-sm text-gray-500 uppercase tracking-wider font-semibold mb-1">Burnout Score</p>
+                  <p className="text-sm text-gray-500 uppercase tracking-wider font-semibold mb-1">Condition Score</p>
                   <div className="flex items-end gap-2">
                     <span className={`text-5xl font-mono font-bold tracking-tighter ${latestInsight.burnout_score > 75 ? 'text-red-500' : latestInsight.burnout_score > 40 ? 'text-yellow-500' : 'text-green-500'}`}>
                       {latestInsight.burnout_score}
@@ -84,7 +84,7 @@ export default function AIInsights() {
 
         {/* Burnout Trend Chart */}
         <div className="lg:col-span-2 bg-surface p-6 rounded-2xl border border-gray-800 shadow-xl flex flex-col">
-          <h2 className="text-lg font-bold text-white mb-6">Burnout Trajectory</h2>
+          <h2 className="text-lg font-bold text-white mb-6">Condition Trajectory</h2>
           
           <div className="flex-1 w-full min-h-[300px]">
             {insightHistory.length === 0 ? (

@@ -287,7 +287,7 @@ export default function Slideshow() {
                 Why We Fail to Manage Stress
               </h2>
               <p className="text-gray-450 leading-relaxed text-sm md:text-base">
-                Burnout is not a failure of willpower; it is a **failure of education**. In modern work and study environments, we are never taught how to pace ourselves.
+                Exhaustion is not a failure of willpower; it is a **failure of education**. In modern work and study environments, we are never taught how to pace ourselves.
               </p>
               <ul className="space-y-3.5 text-sm text-gray-300">
                 <li className="flex items-start gap-2.5">
@@ -341,7 +341,7 @@ export default function Slideshow() {
                 The Experiential Pacing Engine
               </h2>
               <p className="text-gray-455 text-sm mt-2 max-w-lg mx-auto">
-                Aegis solves burnout by transforming mental pacing into an interactive, simulated curriculum.
+                Aegis solves fatigue by transforming task pacing into an interactive, simulated curriculum.
               </p>
             </div>
 
@@ -357,7 +357,7 @@ export default function Slideshow() {
                   icon: BrainCircuit,
                   title: "2. Consequence Sandbox",
                   color: "text-purple-400 bg-purple-950/20 border-purple-900/50",
-                  desc: "High stress triggers in-game crises (strikes, structural failure). Instead of dry text warnings, users learn the costs of burnout through simulation."
+                  desc: "High stress triggers in-game crises (strikes, structural failure). Instead of dry text warnings, users learn the costs of exhaustion through simulation."
                 },
                 {
                   icon: HeartPulse,
@@ -396,7 +396,7 @@ export default function Slideshow() {
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="text-purple-400 shrink-0" size={16} />
-                  <span><strong>Stress Quantifying:</strong> Helps users connect physical feelings to a concrete 0-100 Burnout Score.</span>
+                  <span><strong>Stress Quantifying:</strong> Helps users connect physical feelings to a concrete 0-100 Condition Score.</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="text-purple-400 shrink-0" size={16} />
@@ -585,10 +585,10 @@ export default function Slideshow() {
                 <ShieldAlert size={14} className="animate-pulse" /> Consequence Simulation
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-white leading-tight">
-                Simulating Burnout Tolls
+                Simulating Condition Tolls
               </h2>
               <p className="text-gray-455 text-sm leading-relaxed">
-                If the user ignores warning levels and pushes cognitive limits, Gemini-generated crises hit the village. This teaches users that **unmanaged stress has real, disruptive consequences**.
+                If the user ignores warning levels and pushes cognitive limits, Gemini-generated crises hit the village. This teaches users that **unmanaged strain has real, disruptive consequences**.
               </p>
               <ul className="space-y-3.5 text-xs text-gray-300">
                 <li className="flex items-start gap-2.5">
@@ -601,7 +601,7 @@ export default function Slideshow() {
                 </li>
                 <li className="flex items-start gap-2.5">
                   <XCircle className="text-orange-500 shrink-0 mt-0.5" size={16} />
-                  <span><strong>Paced Restoration Loops:</strong> Users cannot resolve crises purely by spending gold; they must complete actual physical Recharge tasks, learning that active rest is the only real cure for burnout.</span>
+                  <span><strong>Paced Restoration Loops:</strong> Users cannot resolve crises purely by spending gold; they must complete actual physical Recharge tasks, learning that active rest is the only real cure for exhaustion.</span>
                 </li>
               </ul>
             </div>

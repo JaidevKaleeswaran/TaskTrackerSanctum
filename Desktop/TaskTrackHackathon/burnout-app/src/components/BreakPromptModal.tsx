@@ -38,7 +38,7 @@ export default function BreakPromptModal({ isOpen, onClose }: { isOpen: boolean,
           >
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-accent via-red-500 to-accent" />
             
-            <h2 className="text-3xl font-bold text-white tracking-tight mb-2">Burnout Limit Reached</h2>
+            <h2 className="text-3xl font-bold text-white tracking-tight mb-2">Stamina Limit Reached</h2>
             <p className="text-gray-400 mb-8">
               You've reached your current stamina threshold. Taking a break now is highly recommended to maintain long-term focus.
             </p>
