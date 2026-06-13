@@ -349,21 +349,21 @@ export default function Slideshow() {
               {[
                 {
                   icon: Activity,
-                  title: "1. Diagnostic Awareness",
+                  title: "1. Pacing Simulation",
                   color: "text-blue-400 bg-blue-950/20 border-blue-900/50",
-                  desc: "Teaches users to separate Focus (high energy) and Recharge (reloading energy) tasks, tracking daily strain levels visually."
+                  desc: "Your daily task tracking feeds directly into a village simulator. Spending gold on building upgrades models the allocation of limited energy resources."
                 },
                 {
                   icon: BrainCircuit,
-                  title: "2. Guided Reflections",
+                  title: "2. Consequence Sandbox",
                   color: "text-purple-400 bg-purple-950/20 border-purple-900/50",
-                  desc: "Gemini AI analyzes mood updates, teaching users to identify recurring stress patterns and prescribing personalized advice."
+                  desc: "High stress triggers in-game crises (strikes, structural failure). Instead of dry text warnings, users learn the costs of burnout through simulation."
                 },
                 {
                   icon: HeartPulse,
-                  title: "3. Somatic Practice",
+                  title: "3. Recovery Loops",
                   color: "text-emerald-400 bg-emerald-950/20 border-emerald-900/50",
-                  desc: "Forces breaks when danger thresholds are crossed, training users in box breathing methods to reset their nervous system."
+                  desc: "Repairing damaged structures requires completing real-life Recharge tasks. This gameplay mechanic teaches that active rest is essential for recovery."
                 }
               ].map((card, i) => (
                 <div key={i} className={`p-5 rounded-xl border ${card.color} bg-opacity-30 backdrop-blur-sm flex flex-col gap-3 hover:scale-[1.02] transition-transform`}>
@@ -526,9 +526,9 @@ export default function Slideshow() {
               <div className="inline-flex items-center gap-2 bg-yellow-950/40 border border-yellow-900/60 px-3 py-1.5 rounded-full text-accent text-xs font-semibold uppercase tracking-wider mb-2">
                 <Sparkles size={14} /> Simulated Feedback
               </div>
-              <h2 className="text-3xl font-bold text-white">Learning Resource Management</h2>
+              <h2 className="text-3xl font-bold text-white">Simulated Work-Rest Pacing</h2>
               <p className="text-gray-455 text-xs mt-1">
-                Completing focus and recharge tasks earns resources to construct a village. This models the balance of workload and rest.
+                Completing focus and recharge tasks earns gold to construct a village, directly modeling the active balance of workload and rest.
               </p>
             </div>
 
@@ -540,7 +540,7 @@ export default function Slideshow() {
                   stat: "Fuels Village Growth",
                   cost: "100 Gold",
                   color: "border-yellow-900/50 hover:shadow-yellow-900/10 bg-yellow-950/10",
-                  desc: "Farms represent population foundation. Complete task goals to earn currency to fund these expansions."
+                  desc: "Farms represent workload capacity. Upgrading them supports a larger population baseline, teaching that basic health foundation determines overall potential."
                 },
                 {
                   title: "Markets (Economy)",
@@ -548,7 +548,7 @@ export default function Slideshow() {
                   stat: "Teaches Economic Pacing",
                   cost: "150 Gold",
                   color: "border-amber-900/50 hover:shadow-amber-900/10 bg-amber-950/10",
-                  desc: "Generates passive gold. Illustrates how productivity spikes the revenue curve, but requires safety buffers."
+                  desc: "Markets generate active income. They model productive output, illustrating how ticking off focus items creates revenue, but requires investment back into safety."
                 },
                 {
                   title: "Towers (Defense)",
@@ -556,7 +556,7 @@ export default function Slideshow() {
                   stat: "Boosts Security Rating",
                   cost: "250 Gold",
                   color: "border-blue-900/50 hover:shadow-blue-900/10 bg-blue-950/10",
-                  desc: "Protects buildings and raises victory chances in raids, demonstrating how security upgrades reduce risk."
+                  desc: "Towers represent cognitive defense buffers. They protect against stress events and raise raiding success, showing that spending on safety structures reduces threat risk."
                 }
               ].map((b, idx) => (
                 <div key={idx} className={`p-4 rounded-xl border ${b.color} bg-black/40 hover:scale-[1.01] transition-all flex flex-col justify-between`}>
@@ -593,15 +593,15 @@ export default function Slideshow() {
               <ul className="space-y-3.5 text-xs text-gray-300">
                 <li className="flex items-start gap-2.5">
                   <XCircle className="text-orange-500 shrink-0 mt-0.5" size={16} />
-                  <span><strong>Simulated Fallout:</strong> Events like worker strikes freeze village gold production, showing that burnout halts progress.</span>
+                  <span><strong>Simulated Exhaustion Sandbox:</strong> Crises like labor strikes freeze gold gains, demonstrating how cognitive exhaustion halts productive progress in real life.</span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <XCircle className="text-orange-500 shrink-0 mt-0.5" size={16} />
-                  <span><strong>Building Degradation:</strong> Crises damage structures (dropping building HP), forcing users to spend resources on repairs.</span>
+                  <span><strong>Visible Damaged Structures:</strong> Ignoring check-in warning indicators damages building HP. Users experience stress as a physical depletion of their created village assets.</span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <XCircle className="text-orange-500 shrink-0 mt-0.5" size={16} />
-                  <span><strong>Recharge Connection:</strong> Repairs cost money, but completing a Recharge task cools the AI crisis engine down immediately.</span>
+                  <span><strong>Paced Restoration Loops:</strong> Users cannot resolve crises purely by spending gold; they must complete actual physical Recharge tasks, learning that active rest is the only real cure for burnout.</span>
                 </li>
               </ul>
             </div>
@@ -663,15 +663,15 @@ export default function Slideshow() {
               <ul className="space-y-3 text-xs text-gray-300">
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="text-indigo-400 shrink-0" size={16} />
-                  <span><strong>Calculated Risks:</strong> Displays win probability dynamically before committing resources.</span>
+                  <span><strong>Calculated Stress Risks:</strong> Displays win probability dynamically, teaching users to assess risk factors under load before acting.</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="text-indigo-400 shrink-0" size={16} />
-                  <span><strong>Strategic Preparation:</strong> Upgrade Guard Towers and population to boost win probability.</span>
+                  <span><strong>Preparation vs Impulse:</strong> Upgrading defense structures (Guard Towers) and workforce size (Population) improves win probability, showing that preparation directly increases success rates.</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="text-indigo-400 shrink-0" size={16} />
-                  <span><strong>Teaches Resilience:</strong> Raid defeats damage buildings, training users to maintain reserve funds.</span>
+                  <span><strong>Experiencing Failures Safely:</strong> Failed raids damage building HP and drain gold, providing a safe playground to experience failure and learn to maintain safety reserves.</span>
                 </li>
               </ul>
             </div>
