@@ -73,7 +73,7 @@ export default function GameTab() {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row min-h-[calc(100vh-100px)] gap-6 w-full max-w-[1600px] mx-auto pt-4 pb-8 relative">
+    <div className="flex flex-col gap-6 w-full pt-4 pb-8 relative">
       
       {/* INVASION MODAL OVERLAY */}
       {activeInvasion && (
@@ -130,263 +130,276 @@ export default function GameTab() {
         </div>
       )}
 
-      {/* Master Control Panel (Left Side UI) */}
-      <aside className="w-full lg:w-96 flex flex-col gap-6 shrink-0 h-full overflow-y-auto pr-2 custom-scrollbar">
+      {/* 2-Column Side-by-Side Dashboard Layout */}
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 w-full items-stretch">
         
-        {/* Status Header Panel */}
-        <div className="bg-surface rounded-2xl p-6 border border-gray-800 shadow-xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-accent/10 rounded-bl-full -z-0" />
+        {/* Left Column: Visual Map (Top) & Status + Raids Panels (Bottom) */}
+        <div className="xl:col-span-8 flex flex-col gap-6">
+          {/* Visual Engine (Top Canvas) */}
+          <main className="w-full h-[480px] relative">
+            <VillageCanvas />
+          </main>
+
+          {/* Subgrid of Control Panels */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+            
+            {/* Column 1: Aegis Status & Buildings */}
+            <div className="bg-surface rounded-2xl p-5 border border-gray-800 shadow-xl relative overflow-hidden flex flex-col justify-between h-[230px]">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-accent/5 rounded-bl-full -z-0 pointer-events-none" />
+              
+              <div>
+                {isEditingName ? (
+                  <div className="flex items-center gap-2 mb-1 relative z-10">
+                    <input 
+                      type="text"
+                      value={tempName}
+                      onChange={(e) => setTempName(e.target.value)}
+                      className="bg-black border border-accent text-white font-bold px-2 py-0.5 rounded outline-none w-full text-base"
+                      autoFocus
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          useGameStore.getState().setVillageName(tempName);
+                          setIsEditingName(false);
+                        }
+                      }}
+                    />
+                    <button 
+                      onClick={() => {
+                        useGameStore.getState().setVillageName(tempName);
+                        setIsEditingName(false);
+                      }}
+                      className="text-accent hover:text-white font-bold text-xs"
+                    >
+                      Save
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2 mb-1 relative z-10 group cursor-pointer" onClick={() => { setTempName(villageName); setIsEditingName(true); }}>
+                    <h1 className="text-xl font-black text-white tracking-tight">{villageName}</h1>
+                    <Sparkles size={14} className="text-gray-500 group-hover:text-accent transition-colors" />
+                  </div>
+                )}
+
+                <p className="text-gray-400 font-semibold text-[10px] mb-2 relative z-10">Population: {(inventory.farms * 10) + (inventory.stores * 5)}</p>
+                
+                <div className="flex justify-between items-end mb-1 relative z-10">
+                  <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Overall Health</span>
+                  <span className={`text-sm font-black ${villageHealthPercent > 70 ? 'text-green-500' : villageHealthPercent > 30 ? 'text-yellow-500' : 'text-red-500'}`}>
+                    {villageHealthPercent}%
+                  </span>
+                </div>
+                <div className="w-full h-1 bg-gray-900 rounded-full overflow-hidden mb-3">
+                  <div 
+                    className={`h-full transition-all duration-1000 ${villageHealthPercent > 70 ? 'bg-green-500' : villageHealthPercent > 30 ? 'bg-yellow-500' : 'bg-red-500'}`} 
+                    style={{ width: `${villageHealthPercent}%` }} 
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1.5 border-t border-gray-800/80 pt-3 flex-1 overflow-y-auto custom-scrollbar">
+                {buildings.map(b => (
+                  <div key={b.id} className="flex items-center justify-between text-[11px]">
+                    <div className="flex items-center gap-1.5 text-gray-300">
+                      <Building2 size={12} className="text-gray-500" />
+                      <span>{b.name} <span className="text-gray-600 text-[9px]">(Lvl {b.level})</span></span>
+                    </div>
+                    <span className={`font-mono font-bold ${b.health > 70 ? 'text-green-500' : b.health > 30 ? 'text-yellow-500' : 'text-red-500'}`}>
+                      {b.health} HP
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              <button 
+                onClick={handleConsultGameMaster}
+                disabled={isConsulting}
+                className={`w-full mt-3 ${isConsulting ? 'bg-purple-900/50 text-purple-300' : 'bg-purple-600 hover:bg-purple-500 text-white'} border border-purple-500 text-[10px] font-bold py-2 rounded-xl transition-colors shadow-[0_0_15px_rgba(147,51,234,0.15)]`}
+              >
+                {isConsulting ? "Game Master is thinking..." : "Consult AI Game Master"}
+              </button>
+            </div>
+
+            {/* Column 3: War Room (Raids) */}
+            <div className="bg-red-950/10 rounded-2xl p-5 border border-red-900/30 shadow-xl flex flex-col justify-between h-[230px]">
+              <div>
+                <div className="flex items-center gap-2 mb-1 border-b border-red-900/20 pb-1.5">
+                  <Sword className="text-red-400" size={14} />
+                  <h2 className="text-sm font-bold text-white tracking-tight">War Room</h2>
+                </div>
+                <p className="text-[10px] text-gray-400 mb-2 leading-normal font-medium">
+                  Raid other settlements. Win rate scales with population and Guard Towers.
+                </p>
+                
+                <div className="space-y-1.5">
+                  {/* Easy Raid */}
+                  <div className="bg-black/50 rounded-lg p-1.5 border border-gray-900 flex items-center justify-between gap-2">
+                    <div className="flex-1 min-w-0">
+                      <h4 className="text-[11px] font-bold text-white truncate">Small Settlement</h4>
+                      <p className="text-[9px] text-gray-500">Chance: 40% base</p>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <span className="text-[9px] text-green-400 font-bold block">+200g</span>
+                      <span className="text-[8px] text-red-500 font-bold block">-50g</span>
+                    </div>
+                    <button 
+                      onClick={() => setRaidResult(attemptRaid('easy'))}
+                      className="px-2 py-1 rounded bg-red-900/20 hover:bg-red-900/40 border border-red-900/40 text-[10px] font-bold text-white shrink-0 transition-colors"
+                    >
+                      Raid
+                    </button>
+                  </div>
+
+                  {/* Medium Raid */}
+                  <div className="bg-black/50 rounded-lg p-1.5 border border-gray-900 flex items-center justify-between gap-2">
+                    <div className="flex-1 min-w-0">
+                      <h4 className="text-[11px] font-bold text-white truncate">Fortified Town</h4>
+                      <p className="text-[9px] text-gray-500">Chance: 20% base</p>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <span className="text-[9px] text-green-400 font-bold block">+500g</span>
+                      <span className="text-[8px] text-red-500 font-bold block">-150g</span>
+                    </div>
+                    <button 
+                      onClick={() => setRaidResult(attemptRaid('medium'))}
+                      className="px-2 py-1 rounded bg-red-900/20 hover:bg-red-900/40 border border-red-900/40 text-[10px] font-bold text-white shrink-0 transition-colors"
+                    >
+                      Raid
+                    </button>
+                  </div>
+
+                  {/* Hard Raid */}
+                  <div className="bg-black/50 rounded-lg p-1.5 border border-gray-900 flex items-center justify-between gap-2">
+                    <div className="flex-1 min-w-0">
+                      <h4 className="text-[11px] font-bold text-white truncate">The Citadel</h4>
+                      <p className="text-[9px] text-gray-500">Chance: 5% base</p>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <span className="text-[9px] text-green-400 font-bold block">+1500g</span>
+                      <span className="text-[8px] text-red-500 font-bold block">-400g</span>
+                    </div>
+                    <button 
+                      onClick={() => setRaidResult(attemptRaid('hard'))}
+                      className="px-2 py-1 rounded bg-red-900/20 hover:bg-red-900/40 border border-red-900/40 text-[10px] font-bold text-white shrink-0 transition-colors"
+                    >
+                      Raid
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        {/* Right Column: Treasury & Upgrade Shop */}
+        <div className="xl:col-span-4 flex flex-col gap-6">
           
-          {isEditingName ? (
-            <div className="flex items-center gap-2 mb-1 relative z-10">
-              <input 
-                type="text"
-                value={tempName}
-                onChange={(e) => setTempName(e.target.value)}
-                className="bg-black border border-accent text-white font-bold px-2 py-1 rounded outline-none w-full"
-                autoFocus
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    useGameStore.getState().setVillageName(tempName);
-                    setIsEditingName(false);
-                  }
-                }}
-              />
-              <button 
-                onClick={() => {
-                  useGameStore.getState().setVillageName(tempName);
-                  setIsEditingName(false);
-                }}
-                className="text-accent hover:text-white font-bold"
-              >
-                Save
-              </button>
-            </div>
-          ) : (
-            <div className="flex items-center gap-2 mb-1 relative z-10 group cursor-pointer" onClick={() => { setTempName(villageName); setIsEditingName(true); }}>
-              <h1 className="text-3xl font-black text-white tracking-tight">{villageName}</h1>
-              <Sparkles size={16} className="text-gray-500 group-hover:text-accent transition-colors" />
-            </div>
-          )}
-
-          <p className="text-gray-400 font-medium mb-6 relative z-10">Population: {(inventory.farms * 10) + (inventory.stores * 5)}</p>
-          
-          <div className="flex justify-between items-end mb-2 relative z-10">
-            <span className="text-sm font-bold text-gray-400 uppercase tracking-wider">Overall Health</span>
-            <span className={`text-xl font-black ${villageHealthPercent > 70 ? 'text-green-500' : villageHealthPercent > 30 ? 'text-yellow-500' : 'text-red-500'}`}>
-              {villageHealthPercent}%
-            </span>
-          </div>
-          <div className="w-full h-2 bg-gray-900 rounded-full overflow-hidden mb-4">
-            <div 
-              className={`h-full transition-all duration-1000 ${villageHealthPercent > 70 ? 'bg-green-500' : villageHealthPercent > 30 ? 'bg-yellow-500' : 'bg-red-500'}`} 
-              style={{ width: `${villageHealthPercent}%` }} 
-            />
-          </div>
-
-          <button 
-            onClick={handleConsultGameMaster}
-            disabled={isConsulting}
-            className={`w-full ${isConsulting ? 'bg-purple-900/50 text-purple-300' : 'bg-purple-600 hover:bg-purple-500 text-white'} border border-purple-500 text-xs font-bold py-3 rounded-xl transition-colors mb-6 shadow-[0_0_15px_rgba(147,51,234,0.3)]`}
-          >
-            {isConsulting ? "Game Master is thinking..." : "Consult AI Game Master"}
-          </button>
-
-          <div className="space-y-3">
-            {buildings.map(b => (
-              <div key={b.id} className="flex items-center justify-between text-sm">
-                <div className="flex items-center gap-2 text-gray-300">
-                  <Building2 size={14} className="text-gray-500" />
-                  <span>{b.name} <span className="text-gray-600 text-xs">(Lvl {b.level})</span></span>
+          <div className="bg-surface rounded-2xl p-5 border border-gray-800 shadow-xl flex flex-col justify-between h-full min-h-[734px]">
+            <div>
+              <div className="flex items-center justify-between mb-4 border-b border-gray-800/80 pb-3">
+                <div>
+                  <span className="text-[9px] font-bold text-accent uppercase tracking-widest">Treasury</span>
+                  <div className="text-2xl font-black text-white mt-0.5">{currency} <span className="text-lg opacity-50">💰</span></div>
                 </div>
-                <span className={`font-bold ${b.health > 70 ? 'text-green-500' : b.health > 30 ? 'text-yellow-500' : 'text-red-500'}`}>
-                  {b.health} HP
-                </span>
+                
+                <div className="flex items-center gap-1.5">
+                  <button 
+                    onClick={() => useGameStore.getState().resetGame()}
+                    className="bg-red-500/10 hover:bg-red-500/25 text-red-500 text-[9px] font-bold px-2 py-1 rounded border border-red-500/20 transition-colors"
+                    title="Reset Game"
+                  >
+                    Reset
+                  </button>
+                  <button 
+                    onClick={() => forceSpawnProblem()}
+                    className="bg-red-500/10 hover:bg-red-500/25 text-red-500 text-[9px] font-bold px-2 py-1 rounded border border-red-500/20 transition-colors"
+                    title="Test Crises"
+                  >
+                    Test
+                  </button>
+                  <button 
+                    onClick={() => useGameStore.getState().earnCurrency(5000)}
+                    className="bg-yellow-500/10 hover:bg-yellow-500/25 text-yellow-500 text-[9px] font-bold px-2 py-1 rounded border border-yellow-500/20 transition-colors"
+                  >
+                    +Dev
+                  </button>
+                </div>
               </div>
-            ))}
+
+              <h3 className="text-xs font-bold text-white mb-3 flex items-center gap-1.5"><Home size={13} className="text-blue-400" /> Upgrade Shop</h3>
+              
+              <div className="space-y-3">
+                {/* Farm Upgrade */}
+                <div className="bg-black/40 rounded-xl p-3 border border-gray-900/60 flex items-center justify-between gap-3">
+                  <div className="flex-1">
+                    <h4 className="text-xs font-bold text-white flex items-center gap-1.5"><Factory size={13} className="text-green-400"/> Hydro-Farm</h4>
+                    <p className="text-[10px] text-gray-500">Raises population max by 10.</p>
+                  </div>
+                  <button 
+                    onClick={() => handlePurchase('farms', 150)}
+                    className={`px-3 py-1.5 rounded bg-gray-900 border text-xs font-bold transition-all shrink-0 ${shakeId === 'buy-farms' ? 'animate-error-shake border-red-500 bg-red-950/30' : 'border-gray-800 hover:border-gray-700'}`}
+                  >
+                    <span className={`mr-2 font-mono ${currency >= 150 ? 'text-accent' : 'text-red-500'}`}>150 💰</span>
+                    <span className="text-gray-400 text-[10px]">Buy ({inventory.farms})</span>
+                  </button>
+                </div>
+
+                {/* Store Upgrade */}
+                <div className="bg-black/40 rounded-xl p-3 border border-gray-900/60 flex items-center justify-between gap-3">
+                  <div className="flex-1">
+                    <h4 className="text-xs font-bold text-white flex items-center gap-1.5"><Eye size={13} className="text-yellow-400"/> General Store</h4>
+                    <p className="text-[10px] text-gray-500">Passive yields: 15g per store / min.</p>
+                  </div>
+                  <button 
+                    onClick={() => handlePurchase('stores', 300)}
+                    className={`px-3 py-1.5 rounded bg-gray-900 border text-xs font-bold transition-all shrink-0 ${shakeId === 'buy-stores' ? 'animate-error-shake border-red-500 bg-red-950/30' : 'border-gray-800 hover:border-gray-700'}`}
+                  >
+                    <span className={`mr-2 font-mono ${currency >= 300 ? 'text-accent' : 'text-red-500'}`}>300 💰</span>
+                    <span className="text-gray-400 text-[10px]">Buy ({inventory.stores})</span>
+                  </button>
+                </div>
+
+                {/* Tower Upgrade */}
+                <div className="bg-black/40 rounded-xl p-3 border border-gray-900/60 flex items-center justify-between gap-3">
+                  <div className="flex-1">
+                    <h4 className="text-xs font-bold text-white flex items-center gap-1.5"><Sword size={13} className="text-red-400"/> Guard Tower</h4>
+                    <p className="text-[10px] text-gray-500">Defenses +5% raid chance.</p>
+                  </div>
+                  <button 
+                    onClick={() => handlePurchase('guard_towers', 500)}
+                    className={`px-3 py-1.5 rounded bg-gray-900 border text-xs font-bold transition-all shrink-0 ${shakeId === 'buy-guard_towers' ? 'animate-error-shake border-red-500 bg-red-950/30' : 'border-gray-800 hover:border-gray-700'}`}
+                  >
+                    <span className={`mr-2 font-mono ${currency >= 500 ? 'text-accent' : 'text-red-500'}`}>500 💰</span>
+                    <span className="text-gray-400 text-[10px]">Buy ({inventory.guard_towers})</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Resource Production & Benefits */}
+            <div className="border-t border-gray-800/80 pt-4 mt-6">
+              <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2.5">Resource Multipliers</h4>
+              <div className="grid grid-cols-3 gap-2">
+                <div className="bg-black/50 p-2 rounded-lg border border-gray-900 text-center">
+                  <span className="text-[8px] text-gray-500 block uppercase font-mono">Max Pop</span>
+                  <span className="text-xs font-bold text-green-400 font-mono">+{(inventory.farms * 10) + (inventory.stores * 5)}</span>
+                </div>
+                <div className="bg-black/50 p-2 rounded-lg border border-gray-900 text-center">
+                  <span className="text-[8px] text-gray-500 block uppercase font-mono">Gold Gen</span>
+                  <span className="text-xs font-bold text-yellow-400 font-mono">+{inventory.stores * 15}g/m</span>
+                </div>
+                <div className="bg-black/50 p-2 rounded-lg border border-gray-900 text-center">
+                  <span className="text-[8px] text-gray-500 block uppercase font-mono">Raid Buff</span>
+                  <span className="text-xs font-bold text-red-400 font-mono">+{inventory.guard_towers * 5}%</span>
+                </div>
+              </div>
+            </div>
+
           </div>
+
         </div>
 
-        {/* Currency Panel */}
-        <div className="bg-black rounded-2xl p-6 border border-accent/20 shadow-[0_0_15px_rgba(255,215,0,0.1)] flex items-center justify-between">
-          <div>
-            <span className="text-xs font-bold text-accent uppercase tracking-widest">Treasury</span>
-            <div className="text-4xl font-black text-white mt-1">{currency} <span className="text-2xl opacity-50">💰</span></div>
-          </div>
-          <div className="flex items-center gap-3">
-            <button 
-              onClick={() => useGameStore.getState().resetGame()}
-              className="bg-red-500/20 hover:bg-red-500/40 text-red-500 text-xs font-bold px-3 py-2 rounded-lg border border-red-500/50 transition-colors"
-            >
-              Reset All
-            </button>
-            <button 
-              onClick={() => forceSpawnProblem()}
-              className="bg-red-500/20 hover:bg-red-500/40 text-red-500 text-xs font-bold px-3 py-2 rounded-lg border border-red-500/50 transition-colors"
-            >
-              Test Problem
-            </button>
-            <button 
-              onClick={() => useGameStore.getState().earnCurrency(100000)}
-              className="bg-yellow-500/20 hover:bg-yellow-500/40 text-yellow-500 text-xs font-bold px-3 py-2 rounded-lg border border-yellow-500/50 transition-colors"
-            >
-              +Dev Cash
-            </button>
-            <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center text-accent">
-              <Coins size={28} />
-            </div>
-          </div>
-        </div>
-
-        {/* Upgrade Shop */}
-        <div className="bg-surface rounded-2xl p-6 border border-gray-800 shadow-xl flex-1">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 bg-blue-500/20 rounded-lg"><Home className="text-blue-400" size={20} /></div>
-            <h2 className="text-xl font-bold text-white tracking-tight">Upgrade Shop</h2>
-          </div>
-
-          <div className="space-y-4">
-            {/* Farm Upgrade */}
-            <div className="bg-black/50 rounded-xl p-4 border border-gray-800">
-              <div className="flex justify-between items-start mb-2">
-                <div>
-                  <h3 className="text-white font-bold flex items-center gap-2"><Factory size={16} className="text-green-400"/> Hydro-Farm</h3>
-                  <p className="text-xs text-gray-500 mt-1">Increases village max capacity.</p>
-                </div>
-                <span className="text-xs font-bold text-accent bg-accent/10 px-2 py-1 rounded">Owned: {inventory.farms}</span>
-              </div>
-              <button 
-                onClick={() => handlePurchase('farms', 150)}
-                className={`w-full mt-3 flex items-center justify-between p-2 rounded bg-gray-800/50 hover:bg-gray-800 border transition-colors ${shakeId === 'buy-farms' ? 'animate-error-shake border-red-500 bg-red-950/30' : 'border-gray-700'}`}
-              >
-                <span className="text-sm font-bold text-white">+1 Farm</span>
-                <span className={`text-sm font-bold ${currency >= 150 ? 'text-accent' : 'text-red-500'}`}>150 💰</span>
-              </button>
-            </div>
-
-            {/* Store Upgrade */}
-            <div className="bg-black/50 rounded-xl p-4 border border-gray-800">
-              <div className="flex justify-between items-start mb-2">
-                <div>
-                  <h3 className="text-white font-bold flex items-center gap-2"><Eye size={16} className="text-yellow-400"/> General Store</h3>
-                  <p className="text-xs text-gray-500 mt-1">Generates passive income.</p>
-                </div>
-                <span className="text-xs font-bold text-accent bg-accent/10 px-2 py-1 rounded">Owned: {inventory.stores}</span>
-              </div>
-              <button 
-                onClick={() => handlePurchase('stores', 300)}
-                className={`w-full mt-3 flex items-center justify-between p-2 rounded bg-gray-800/50 hover:bg-gray-800 border transition-colors ${shakeId === 'buy-stores' ? 'animate-error-shake border-red-500 bg-red-950/30' : 'border-gray-700'}`}
-              >
-                <span className="text-sm font-bold text-white">+1 Store</span>
-                <span className={`text-sm font-bold ${currency >= 300 ? 'text-accent' : 'text-red-500'}`}>300 💰</span>
-              </button>
-            </div>
-
-            {/* Tower Upgrade */}
-            <div className="bg-black/50 rounded-xl p-4 border border-gray-800">
-              <div className="flex justify-between items-start mb-2">
-                <div>
-                  <h3 className="text-white font-bold flex items-center gap-2"><Sword size={16} className="text-red-400"/> Guard Tower</h3>
-                  <p className="text-xs text-gray-500 mt-1">Reduces raid damage & demands.</p>
-                </div>
-                <span className="text-xs font-bold text-accent bg-accent/10 px-2 py-1 rounded">Owned: {inventory.guard_towers}</span>
-              </div>
-              <button 
-                onClick={() => handlePurchase('guard_towers', 500)}
-                className={`w-full mt-3 flex items-center justify-between p-2 rounded bg-gray-800/50 hover:bg-gray-800 border transition-colors ${shakeId === 'buy-guard_towers' ? 'animate-error-shake border-red-500 bg-red-950/30' : 'border-gray-700'}`}
-              >
-                <span className="text-sm font-bold text-white">+1 Tower</span>
-                <span className={`text-sm font-bold ${currency >= 500 ? 'text-accent' : 'text-red-500'}`}>500 💰</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* War Room / Raiding Map */}
-        <div className="bg-red-950/20 rounded-2xl p-6 border border-red-900/50 shadow-xl flex-1 mt-6">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 bg-red-500/20 rounded-lg"><Sword className="text-red-400" size={20} /></div>
-            <h2 className="text-xl font-bold text-white tracking-tight">War Room</h2>
-          </div>
-          <p className="text-sm text-gray-400 mb-4">Launch raids against other villages. Win probability scales with your Population and Guard Towers.</p>
-          
-          <div className="space-y-4">
-            {/* Easy Raid */}
-            <div className="bg-black/50 rounded-xl p-4 border border-gray-800">
-              <div className="flex justify-between items-start mb-2">
-                <div>
-                  <h3 className="text-white font-bold">Small Settlement</h3>
-                  <p className="text-xs text-gray-500 mt-1">Low Risk / Low Reward</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-xs text-green-400 font-bold">+200 💰</p>
-                  <p className="text-xs text-red-500 font-bold">-50 💰</p>
-                </div>
-              </div>
-              <button 
-                onClick={() => {
-                  const result = attemptRaid('easy');
-                  setRaidResult(result);
-                }}
-                className="w-full mt-3 p-2 rounded bg-red-900/30 hover:bg-red-900/50 border border-red-900 transition-colors text-sm font-bold text-white"
-              >
-                Launch Raid
-              </button>
-            </div>
-
-            {/* Medium Raid */}
-            <div className="bg-black/50 rounded-xl p-4 border border-gray-800">
-              <div className="flex justify-between items-start mb-2">
-                <div>
-                  <h3 className="text-white font-bold">Fortified Town</h3>
-                  <p className="text-xs text-gray-500 mt-1">Medium Risk / Medium Reward</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-xs text-green-400 font-bold">+500 💰</p>
-                  <p className="text-xs text-red-500 font-bold">-150 💰</p>
-                </div>
-              </div>
-              <button 
-                onClick={() => {
-                  const result = attemptRaid('medium');
-                  setRaidResult(result);
-                }}
-                className="w-full mt-3 p-2 rounded bg-red-900/30 hover:bg-red-900/50 border border-red-900 transition-colors text-sm font-bold text-white"
-              >
-                Launch Raid
-              </button>
-            </div>
-
-            {/* Hard Raid */}
-            <div className="bg-black/50 rounded-xl p-4 border border-gray-800">
-              <div className="flex justify-between items-start mb-2">
-                <div>
-                  <h3 className="text-white font-bold">The Citadel</h3>
-                  <p className="text-xs text-gray-500 mt-1">High Risk / High Reward</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-xs text-green-400 font-bold">+1500 💰</p>
-                  <p className="text-xs text-red-500 font-bold">-400 💰</p>
-                </div>
-              </div>
-              <button 
-                onClick={() => {
-                  const result = attemptRaid('hard');
-                  setRaidResult(result);
-                }}
-                className="w-full mt-3 p-2 rounded bg-red-900/30 hover:bg-red-900/50 border border-red-900 transition-colors text-sm font-bold text-white"
-              >
-                Launch Raid
-              </button>
-            </div>
-          </div>
-        </div>
-      </aside>
-
-      {/* Visual Engine (Right Side Canvas) */}
-      <main className="flex-1 min-h-[600px] relative">
-        <VillageCanvas />
-      </main>
+      </div>
     </div>
   );
 }

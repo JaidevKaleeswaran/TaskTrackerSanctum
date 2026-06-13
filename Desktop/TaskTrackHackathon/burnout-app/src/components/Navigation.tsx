@@ -2,13 +2,14 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Brain, History, Building2, Presentation } from 'lucide-react';
+import { Home, Brain, History, Building2, Presentation, Calendar } from 'lucide-react';
 
 export default function Navigation() {
   const pathname = usePathname();
 
   const links = [
     { href: '/', label: 'Dashboard', icon: Home },
+    { href: '/calendar', label: 'Calendar', icon: Calendar },
     { href: '/game', label: 'Village', icon: Building2 },
     { href: '/insights', label: 'AI Insights', icon: Brain },
     { href: '/history', label: 'History', icon: History },
@@ -17,7 +18,7 @@ export default function Navigation() {
 
   return (
     <nav className="w-full bg-surface border-b border-gray-800 p-4 z-50">
-      <div className="max-w-4xl mx-auto flex justify-between items-center px-4">
+      <div className="max-w-[1650px] mx-auto flex justify-between items-center px-4">
         <h1 className="text-accent font-bold text-xl hidden md:block">Aegis.</h1>
         <div className="flex w-full md:w-auto justify-between md:gap-8">
           {links.map(({ href, label, icon: Icon }) => {

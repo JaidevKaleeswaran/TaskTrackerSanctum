@@ -70,8 +70,21 @@ export default function TaskTracker({ onTaskComplete }: { onTaskComplete?: () =>
     }
   };
 
-  const incompleteTasks = tasks.filter(t => !t.completed);
-  const completedTasks = tasks.filter(t => t.completed);
+  const todayStr = new Date().toISOString().split('T')[0];
+  const incompleteTasks = tasks.filter(t => {
+    if (t.completed) return false;
+    if (!t.dueDate || t.isRecurring || t.dueDate === todayStr || t.dueDate < todayStr) {
+      return true;
+    }
+    return false;
+  });
+  const completedTasks = tasks.filter(t => {
+    if (!t.completed) return false;
+    if (!t.dueDate || t.dueDate === todayStr) {
+      return true;
+    }
+    return false;
+  });
 
   return (
     <>

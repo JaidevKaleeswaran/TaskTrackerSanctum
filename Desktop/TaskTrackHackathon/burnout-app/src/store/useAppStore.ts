@@ -10,6 +10,7 @@ export interface Task {
   completed: boolean;
   durationMinutes: number;
   reward: number; // Added
+  dueDate?: string; // YYYY-MM-DD for calendar support
 }
 
 export interface DayStats {

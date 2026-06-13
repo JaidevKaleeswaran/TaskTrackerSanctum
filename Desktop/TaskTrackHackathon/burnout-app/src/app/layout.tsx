@@ -31,7 +31,7 @@ export default function RootLayout({
       >
         <GlobalTimer />
         <Navigation />
-        <main className="max-w-5xl mx-auto pt-4 pb-24 md:pb-8 px-4 h-full">
+        <main className="max-w-[1650px] mx-auto pt-4 pb-24 md:pb-8 px-6 h-full w-full">
           {children}
         </main>
       </body>

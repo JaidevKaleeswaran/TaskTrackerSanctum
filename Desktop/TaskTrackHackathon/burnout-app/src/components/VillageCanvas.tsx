@@ -49,7 +49,22 @@ export default function VillageCanvas() {
   }
 
   return (
-    <div className="relative w-full h-full min-h-[600px] bg-[#1a1a24] border border-gray-800 rounded-2xl overflow-hidden shadow-2xl">
+    <div className="relative w-full h-[480px] bg-[#111119] bg-[linear-gradient(to_right,#1a1a26_1px,transparent_1px),linear-gradient(to_bottom,#1a1a26_1px,transparent_1px)] bg-[size:2.5rem_2.5rem] border border-gray-800 rounded-2xl overflow-hidden shadow-2xl flex items-center justify-center">
+      {/* Corner HUD labels */}
+      <div className="absolute top-3 left-4 text-[9px] font-mono text-gray-500 uppercase tracking-widest pointer-events-none select-none">
+        Aegis Tactical Monitor v2.1 // Live
+      </div>
+      <div className="absolute top-3 right-4 text-[9px] font-mono text-gray-500 uppercase tracking-widest pointer-events-none select-none flex items-center gap-1.5">
+        <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+        Sync: Active
+      </div>
+      <div className="absolute bottom-3 left-4 text-[9px] font-mono text-gray-500 uppercase tracking-widest pointer-events-none select-none">
+        Sector: Village Center
+      </div>
+      <div className="absolute bottom-3 right-4 text-[9px] font-mono text-gray-500 uppercase tracking-widest pointer-events-none select-none">
+        Lock: Engaged
+      </div>
+
       <style>{`
         @keyframes wander-1 {
           0% { transform: translate(0px, 0px); }
@@ -71,12 +86,12 @@ export default function VillageCanvas() {
         }
       `}</style>
       
-      {/* Locked Map Container */}
-      <div className="absolute inset-0 flex items-center justify-center w-full h-full">
+      {/* Locked Map Container - 1:1 aspect ratio ensures building coordinates never shift or drift */}
+      <div className="relative aspect-square h-[90%] max-h-full mx-auto flex items-center justify-center">
         <img 
           src={currentStageImage} 
           alt="Village Map Stage" 
-          className="w-full h-full object-cover pointer-events-none select-none transition-opacity duration-1000"
+          className="w-full h-full object-cover rounded-xl border border-gray-800 pointer-events-none select-none transition-opacity duration-1000 shadow-[0_0_30px_rgba(0,0,0,0.5)]"
           draggable="false"
         />
 
