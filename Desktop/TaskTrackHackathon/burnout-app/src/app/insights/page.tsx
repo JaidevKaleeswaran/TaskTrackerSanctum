@@ -22,13 +22,21 @@ export default function AIInsights() {
   }, [insightHistory]);
 
   return (
-    <div className="max-w-6xl mx-auto pt-6 h-full flex flex-col gap-6">
-      <header>
-        <h1 className="text-3xl font-bold text-white tracking-tight flex items-center gap-3">
-          <BrainCircuit className="text-accent" size={32} />
-          AI Insights
-        </h1>
-        <p className="text-gray-400 mt-2">Your cognitive load and condition trends, analyzed by Aegis.</p>
+    <div className="w-full pt-6 h-full flex flex-col gap-6">
+      <header className="flex justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-bold text-white tracking-tight flex items-center gap-3">
+            <BrainCircuit className="text-accent" size={32} />
+            AI Insights
+          </h1>
+          <p className="text-gray-400 mt-2">Your cognitive load and condition trends, analyzed by Aegis.</p>
+        </div>
+        <button 
+          onClick={() => useAppStore.getState().generateMockTrajectory()}
+          className="bg-gray-800 hover:bg-gray-700 text-xs font-bold py-2 px-3.5 rounded-lg transition-colors border border-gray-700 text-white"
+        >
+          + Generate Example Trajectory
+        </button>
       </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1">
@@ -88,8 +96,14 @@ export default function AIInsights() {
           
           <div className="flex-1 w-full min-h-[300px]">
             {insightHistory.length === 0 ? (
-              <div className="w-full h-full flex items-center justify-center text-gray-500 border border-dashed border-gray-800 rounded-xl">
-                Not enough data to map trajectory.
+              <div className="w-full h-full flex flex-col items-center justify-center text-gray-500 border border-dashed border-gray-800 rounded-xl gap-3 p-8 text-center min-h-[300px]">
+                <p>Not enough data to map trajectory.</p>
+                <button 
+                  onClick={() => useAppStore.getState().generateMockTrajectory()}
+                  className="bg-gray-800 hover:bg-gray-700 text-xs font-bold py-2 px-3 rounded-lg transition-colors border border-gray-700 text-white"
+                >
+                  Generate Example Trajectory
+                </button>
               </div>
             ) : (
               isClient && (

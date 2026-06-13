@@ -93,18 +93,32 @@ export default function TaskTracker({ onTaskComplete }: { onTaskComplete?: () =>
       <div className="bg-surface p-6 rounded-2xl border border-gray-800 shadow-xl h-full flex flex-col relative">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-bold text-white">Missions</h2>
-          <button 
-            onClick={() => setIsModalOpen(true)}
-            className="bg-accent text-black font-bold p-2 px-4 rounded-lg hover:bg-yellow-400 transition-colors flex items-center gap-2 text-sm"
-          >
-            <Plus size={16} /> New Task
-          </button>
+          <div className="flex items-center gap-2">
+            <button 
+              onClick={() => useAppStore.getState().generateMockTasks()}
+              className="bg-gray-800 hover:bg-gray-700 text-xs font-bold py-2 px-3 rounded-lg transition-colors border border-gray-700 text-white flex items-center gap-1.5"
+            >
+              + Generate Examples
+            </button>
+            <button 
+              onClick={() => setIsModalOpen(true)}
+              className="bg-accent text-black font-bold p-2 px-4 rounded-lg hover:bg-yellow-400 transition-colors flex items-center gap-2 text-sm"
+            >
+              <Plus size={16} /> New Task
+            </button>
+          </div>
         </div>
 
         <div className="flex-1 overflow-y-auto space-y-4 pr-2 custom-scrollbar">
           {tasks.length === 0 ? (
-            <div className="h-full flex items-center justify-center text-gray-500">
+            <div className="h-full flex flex-col items-center justify-center text-gray-500 gap-4 py-12">
               <p>Your list is empty. Create a mission to start.</p>
+              <button 
+                onClick={() => useAppStore.getState().generateMockTasks()}
+                className="bg-gray-800 hover:bg-gray-700 text-xs font-bold py-2.5 px-4 rounded-xl transition-colors border border-gray-750 text-white"
+              >
+                Generate Example Tasks
+              </button>
             </div>
           ) : (
             <>

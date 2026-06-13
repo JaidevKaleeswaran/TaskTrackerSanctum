@@ -68,6 +68,8 @@ interface AppState {
   deleteSession: (id: string) => void;
   updateSession: (id: string, durationMinutes: number) => void;
   generateMockSessions: () => void;
+  generateMockTasks: () => void;
+  generateMockTrajectory: () => void;
 }
 
 const getTodayDateString = () => new Date().toISOString().split('T')[0];
@@ -108,6 +110,39 @@ export const useAppStore = create<AppState>((set) => ({
     // sort descending by completedAt
     const combined = [...mockSessions, ...state.sessions].sort((a, b) => new Date(b.completedAt).getTime() - new Date(a.completedAt).getTime());
     return { sessions: combined };
+  }),
+
+  generateMockTasks: () => set((state) => {
+    const todayStr = getTodayDateString();
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayStr = yesterday.toISOString().split('T')[0];
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const tomorrowStr = tomorrow.toISOString().split('T')[0];
+
+    const mockTasks: Task[] = [
+      { id: 'mock-t1', title: 'Complete Aegis Slideshow', type: 'Focus', isRecurring: false, completed: false, durationMinutes: 45, reward: 135, dueDate: todayStr },
+      { id: 'mock-t2', title: 'Deep Breathing Session', type: 'Recharge', isRecurring: false, completed: false, durationMinutes: 15, reward: 15, dueDate: todayStr },
+      { id: 'mock-t3', title: 'Refactor Village Canvas', type: 'Focus', isRecurring: false, completed: false, durationMinutes: 90, reward: 270, dueDate: yesterdayStr },
+      { id: 'mock-t4', title: 'Hydrate & Stretch', type: 'Recharge', isRecurring: true, completed: false, durationMinutes: 5, reward: 5 },
+      { id: 'mock-t5', title: 'Plan Next Week\'s Milestones', type: 'Focus', isRecurring: false, completed: false, durationMinutes: 60, reward: 180, dueDate: tomorrowStr }
+    ];
+    return { tasks: [...state.tasks, ...mockTasks] };
+  }),
+
+  generateMockTrajectory: () => set((state) => {
+    const mockInsights: BurnoutInsight[] = [
+      { detected_emotion: 'calm', pattern_diagnosed: 'Healthy Pacing', burnout_score: 30, action_directive: 'Maintain current rest schedules.', timestamp: Date.now() - 4 * 24 * 60 * 60 * 1000 },
+      { detected_emotion: 'tired', pattern_diagnosed: 'Linear Output', burnout_score: 45, action_directive: 'Take a break after focus sessions.', timestamp: Date.now() - 3 * 24 * 60 * 60 * 1000 },
+      { detected_emotion: 'exhausted', pattern_diagnosed: 'Overexertion Spike', burnout_score: 78, action_directive: 'High load detected. Step away from screen.', timestamp: Date.now() - 2 * 24 * 60 * 60 * 1000 },
+      { detected_emotion: 'recovering', pattern_diagnosed: 'Somatic Pacing Response', burnout_score: 55, action_directive: 'Recharge tasks logged. Recovery in progress.', timestamp: Date.now() - 1 * 24 * 60 * 60 * 1000 },
+      { detected_emotion: 'focused', pattern_diagnosed: 'Paced Flow State', burnout_score: 25, action_directive: 'Excellent pacing and recovery habits.', timestamp: Date.now() }
+    ];
+    return {
+      latestInsight: mockInsights[mockInsights.length - 1],
+      insightHistory: [...state.insightHistory, ...mockInsights]
+    };
   }),
   
   deleteTask: (id) => set((state) => ({ 
