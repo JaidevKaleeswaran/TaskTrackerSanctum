@@ -39,14 +39,14 @@ interface Slide {
 }
 
 const SLIDES: Slide[] = [
-  { id: 'intro', title: 'Aegis', subtitle: 'Learn the Art of Pacing.' },
-  { id: 'problem', title: 'The Stress Blindspot', subtitle: 'The Pacing Deficit in Modern Work' },
-  { id: 'solution', title: 'Experiential Pacing', subtitle: 'A Three-Tiered Learning Engine' },
-  { id: 'ai', title: 'AI Pacing Mentor', subtitle: 'Gemini-Powered Stress Reflection' },
-  { id: 'breathing', title: 'Interactive Somatic Training', subtitle: 'Portable Regulation Tutorials' },
-  { id: 'village', title: 'Simulated Resource Budgeting', subtitle: 'Balancing Rest & Productivity' },
-  { id: 'calendar', title: 'Tactical Calendar Planner', subtitle: 'Pacing Focus Across the Month' },
-  { id: 'crises', title: 'Consequence Simulation', subtitle: 'Learning the Cost of Exhaustion' },
+  { id: 'intro', title: 'Aegis', subtitle: 'Gamified Calendars & Habit Building' },
+  { id: 'problem', title: 'The Scheduling Gap', subtitle: 'An Essential Habit Missing at Any Age' },
+  { id: 'solution', title: 'Interactive Learning', subtitle: 'Building Habits Through Play' },
+  { id: 'village', title: 'The Village Game', subtitle: 'Task-Driven Resource Simulation' },
+  { id: 'calendar', title: 'Tactical Calendar Planner', subtitle: 'Developing the Habit of Scheduling' },
+  { id: 'ai', title: 'AI Condition Checker', subtitle: 'Gemini-Powered Pacing Diagnostics' },
+  { id: 'breathing', title: 'Timed Breaks & Recovery', subtitle: 'Structured Rest for Sustained Focus' },
+  { id: 'crises', title: 'Consequence Simulation', subtitle: 'Learning the Cost of Overworking' },
   { id: 'raids', title: 'Strategic Risk Training', subtitle: 'Probability & Risk Management' },
   { id: 'stack', title: 'Technical Architecture', subtitle: 'Engineering the Learning Engine' },
   { id: 'conclusion', title: 'The Pacing Standard', subtitle: 'Continuous Wellness Learning' },
@@ -254,7 +254,7 @@ export default function Slideshow() {
             </h1>
             
             <p className="text-lg md:text-2xl text-gray-400 font-medium max-w-2xl mb-8 leading-relaxed">
-              An Interactive Learning Platform for Stress Management & Pacing
+              An Interactive Learning Platform for Habit Building & Pacing
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mt-2">
@@ -272,7 +272,7 @@ export default function Slideshow() {
               </Link>
             </div>
 
-            <p className="text-gray-650 text-xs mt-12 font-mono">
+            <p className="text-gray-500 text-xs mt-12 font-mono">
               Use Left / Right Arrows or Spacebar to navigate
             </p>
           </div>
@@ -282,49 +282,49 @@ export default function Slideshow() {
         return (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center h-full max-w-4xl mx-auto px-4">
             <div className="space-y-6 text-left">
-              <div className="inline-flex items-center gap-2 bg-red-950/40 border border-red-900/60 px-3 py-1.5 rounded-full text-red-400 text-xs font-semibold uppercase tracking-wider">
-                <Flame size={14} className="animate-pulse" /> The Pacing Deficit
+              <div className="inline-flex items-center gap-2 bg-amber-950/40 border border-amber-900/60 px-3 py-1.5 rounded-full text-amber-400 text-xs font-semibold uppercase tracking-wider">
+                <Calendar size={14} className="animate-pulse text-accent" /> The Scheduling Gap
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-white leading-tight">
-                Why We Fail to Manage Stress
+                Missing the Essential Habit of Structuring Time
               </h2>
-              <p className="text-gray-450 leading-relaxed text-sm md:text-base">
-                Exhaustion is not a failure of willpower; it is a **failure of education**. In modern work and study environments, we are never taught how to pace ourselves.
+              <p className="text-gray-455 leading-relaxed text-sm md:text-base">
+                People tend to not keep calendars or schedules. Yet, building a structured routine is an **essential habit** that benefits people at **any age** — from students and young learners to busy professionals.
               </p>
               <ul className="space-y-3.5 text-sm text-gray-300">
                 <li className="flex items-start gap-2.5">
-                  <XCircle className="text-red-500 shrink-0 mt-0.5" size={18} />
-                  <span><strong>Lack of Awareness:</strong> Most individuals cannot recognize their own early cognitive fatigue markers.</span>
+                  <XCircle className="text-amber-500 shrink-0 mt-0.5" size={18} />
+                  <span><strong>The Chaos of Ad-hoc Planning:</strong> Without a visual schedule, it is easy to lose track of priorities and deadlines, leading to unproductive clutter.</span>
                 </li>
                 <li className="flex items-start gap-2.5">
-                  <XCircle className="text-red-500 shrink-0 mt-0.5" size={18} />
-                  <span><strong>Static Checklists:</strong> Standard task managers encourage checking off boxes endlessly, completely ignoring energy levels.</span>
+                  <XCircle className="text-amber-500 shrink-0 mt-0.5" size={18} />
+                  <span><strong>The Pacing Deficit:</strong> Without planning ahead, we stack tasks haphazardly, leaving no room for necessary recovery breaks.</span>
                 </li>
                 <li className="flex items-start gap-2.5">
-                  <XCircle className="text-red-500 shrink-0 mt-0.5" size={18} />
-                  <span><strong>Abstract Consequences:</strong> We treat rest as optional because the negative effects of stress are invisible until we crash.</span>
+                  <XCircle className="text-amber-500 shrink-0 mt-0.5" size={18} />
+                  <span><strong>Habit Inertia:</strong> It is hard to start or maintain calendar routines when standard apps feel like boring, tedious admin chores.</span>
                 </li>
               </ul>
             </div>
 
             <div className="bg-[#151515] p-6 rounded-2xl border border-gray-800 shadow-2xl relative overflow-hidden flex flex-col justify-center gap-6">
-              <div className="absolute top-0 right-0 w-24 h-24 bg-red-500/5 rounded-full blur-2xl" />
+              <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-full blur-2xl" />
               
               <div className="flex items-center justify-between border-b border-gray-800 pb-4">
-                <span className="text-gray-450 font-mono text-xs">PRACTICAL PROBLEM</span>
-                <span className="text-red-500 text-xs font-bold animate-pulse flex items-center gap-1">
-                  IGNORING SIGNS
+                <span className="text-gray-455 font-mono text-xs">HABIT CHALLENGE</span>
+                <span className="text-amber-400 text-xs font-bold animate-pulse flex items-center gap-1">
+                  NO VISIBILITY
                 </span>
               </div>
 
               <div className="space-y-4 text-left">
                 <p className="text-xs text-gray-300 leading-relaxed">
-                  We treat cognitive batteries like infinite resources. Without real-time diagnostic feedback, users keep pushing past safety lines, resulting in compounding errors and physical exhaustion.
+                  We expect ourselves to remember all tasks dynamically. But a lack of scheduling makes long-term consistency unsustainable, resulting in either task abandonment or compounding burnout.
                 </p>
-                <div className="bg-red-950/20 border-l-4 border-red-500 p-3 rounded-r-lg">
-                  <p className="text-xs text-red-400 font-semibold mb-0.5">The Lesson</p>
+                <div className="bg-amber-950/20 border-l-4 border-amber-500 p-3 rounded-r-lg">
+                  <p className="text-xs text-amber-400 font-semibold mb-0.5">The Solution Requirement</p>
                   <p className="text-[11px] text-gray-400 leading-normal">
-                    Pacing must be taught **experientially**. Users need to see the correlation between overwork, performance drops, and recovery times.
+                    Calendar scheduling must be taught **experientially**. Users need a fun, interactive incentive structure to turn planning into an engaging daily ritual.
                   </p>
                 </div>
               </div>
@@ -337,35 +337,35 @@ export default function Slideshow() {
           <div className="flex flex-col justify-center h-full max-w-4xl mx-auto px-4">
             <div className="text-center mb-8">
               <div className="inline-flex items-center gap-2 bg-emerald-950/40 border border-emerald-900/60 px-3 py-1.5 rounded-full text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-3">
-                <Sparkles size={14} /> The Learning Loop
+                <Sparkles size={14} /> Interactive Learning
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-white">
-                The Experiential Pacing Engine
+                Solving the Scheduling Deficit Through Play
               </h2>
               <p className="text-gray-455 text-sm mt-2 max-w-lg mx-auto">
-                Aegis solves fatigue by transforming task pacing into an interactive, simulated curriculum.
+                Aegis bridges the scheduling gap by converting static calendar logs into an active, immersive virtual environment.
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
               {[
                 {
-                  icon: Activity,
-                  title: "1. Pacing Simulation",
+                  icon: Play,
+                  title: "1. The Interactive Village",
                   color: "text-blue-400 bg-blue-950/20 border-blue-900/50",
-                  desc: "Your daily task tracking feeds directly into a village simulator. Spending gold on building upgrades models the allocation of limited energy resources."
+                  desc: "The core engine is a virtual Village Game. Scheduling calendar items and completing tasks awards gold, linking structure directly to gamified success."
                 },
                 {
-                  icon: BrainCircuit,
-                  title: "2. Consequence Sandbox",
+                  icon: Calendar,
+                  title: "2. Strategic Calendar",
                   color: "text-purple-400 bg-purple-950/20 border-purple-900/50",
-                  desc: "High stress triggers in-game crises (strikes, structural failure). Instead of dry text warnings, users learn the costs of exhaustion through simulation."
+                  desc: "Users build the essential habit of long-term scheduling. Organising their month helps prevent task overload while earning continuous gameplay multipliers."
                 },
                 {
                   icon: HeartPulse,
-                  title: "3. Recovery Loops",
+                  title: "3. Gamified Balances",
                   color: "text-emerald-400 bg-emerald-950/20 border-emerald-900/50",
-                  desc: "Repairing damaged structures requires completing real-life Recharge tasks. This gameplay mechanic teaches that active rest is essential for recovery."
+                  desc: "To grow and protect the village, users must balance work (Focus tasks) with structured recovery (Recharge tasks), proving that pacing is a prerequisite for productivity."
                 }
               ].map((card, i) => (
                 <div key={i} className={`p-5 rounded-xl border ${card.color} bg-opacity-30 backdrop-blur-sm flex flex-col gap-3 hover:scale-[1.02] transition-transform`}>
@@ -383,26 +383,26 @@ export default function Slideshow() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center h-full max-w-4xl mx-auto px-4">
             <div className="space-y-6 text-left">
               <div className="inline-flex items-center gap-2 bg-purple-950/40 border border-purple-900/60 px-3 py-1.5 rounded-full text-purple-400 text-xs font-semibold uppercase tracking-wider">
-                <BrainCircuit size={14} /> AI Pacing Mentor
+                <BrainCircuit size={14} /> AI Condition Checker
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-white leading-tight">
                 Self-Reflective Diagnostics
               </h2>
-              <p className="text-gray-450 leading-relaxed text-sm">
-                Aegis uses Gemini AI to turn text journals into learning moments. Instead of arbitrary metrics, users receive qualitative feedback on their mood trends.
+              <p className="text-gray-455 leading-relaxed text-sm">
+                Aegis uses Gemini AI to turn subjective text journals into structured diagnostic metrics. Instead of dry telemetry, the mentor analyzes journal entries to gauge underlying energy trends.
               </p>
               <ul className="space-y-3 text-xs text-gray-300">
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="text-purple-400 shrink-0" size={16} />
-                  <span><strong>Sentiment Analysis:</strong> Identifies underlying emotional stress (fatigue, anxiety, focus).</span>
+                  <span><strong>Qualitative Sentiment:</strong> Evaluates mood triggers (fatigue, high focus, distraction).</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="text-purple-400 shrink-0" size={16} />
-                  <span><strong>Stress Quantifying:</strong> Helps users connect physical feelings to a concrete 0-100 Condition Score.</span>
+                  <span><strong>Condition Score (0-100):</strong> Converts text logs into a visual stamina indicator for the simulation.</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="text-purple-400 shrink-0" size={16} />
-                  <span><strong>Behavioral Prompts:</strong> Suggests specific pacing changes (e.g. taking a walk, changing tasks).</span>
+                  <span><strong>Personalized Guidance:</strong> Suggests task scheduling adjustments to ensure optimal balance.</span>
                 </li>
               </ul>
             </div>
@@ -410,7 +410,7 @@ export default function Slideshow() {
             <div className="bg-[#121212] p-5 rounded-2xl border border-gray-800 shadow-xl flex flex-col gap-4 text-left">
               <div className="flex items-center gap-2 border-b border-gray-800 pb-3">
                 <BrainCircuit size={18} className="text-accent" />
-                <span className="font-bold text-white text-sm">Gemini Pacing Reflection</span>
+                <span className="font-bold text-white text-sm">Gemini Condition Check-In</span>
               </div>
               
               <div className="bg-black/60 p-3 rounded-lg border border-gray-800">
@@ -423,16 +423,16 @@ export default function Slideshow() {
               <div className="space-y-2 text-xs">
                 <div className="flex justify-between p-2.5 bg-black/40 rounded border border-gray-900">
                   <span className="text-gray-500">Detected State:</span>
-                  <span className="text-amber-400 font-bold">FRUSTRATED & EXHAUSTED</span>
+                  <span className="text-amber-400 font-bold">EXHAUSTED & FATIGUED</span>
                 </div>
                 <div className="flex justify-between p-2.5 bg-black/40 rounded border border-gray-900">
-                  <span className="text-gray-500">Calculated Stress Score:</span>
-                  <span className="text-red-500 font-bold font-mono">78 / 100</span>
+                  <span className="text-gray-500">Calculated Condition Score:</span>
+                  <span className="text-red-500 font-bold font-mono">22 / 100 (Critical)</span>
                 </div>
                 <div className="p-3 bg-accent/5 rounded border border-accent/20">
-                  <span className="text-accent font-semibold block mb-0.5 text-[11px]">GEMINI PACING DIRECTIVE</span>
+                  <span className="text-accent font-semibold block mb-0.5 text-[11px]">CONDITION CHECKER ADVICE</span>
                   <p className="text-gray-300 leading-normal text-[11px]">
-                    Step away from the screen. Walk for 5 minutes and drink water. Do not push yourself further in this state.
+                    Your stamina is critically low. Step away from the screen for a timed break now to restore your energy level.
                   </p>
                 </div>
               </div>
@@ -445,26 +445,26 @@ export default function Slideshow() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center h-full max-w-4xl mx-auto px-4">
             <div className="space-y-6 text-left">
               <div className="inline-flex items-center gap-2 bg-emerald-950/40 border border-emerald-900/60 px-3 py-1.5 rounded-full text-emerald-400 text-xs font-semibold uppercase tracking-wider">
-                <HeartPulse size={14} /> Somatic Training
+                <Timer size={14} className="text-emerald-400" /> Timed Breaks & Recovery
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-white leading-tight">
-                Paced Decompression Exercises
+                Mandatory Paced Breaks
               </h2>
-              <p className="text-gray-450 text-sm leading-relaxed">
-                When cognitive fatigue spikes, the application enforces a lock screen. This teaches users how to use paced breathing to quickly decrease heart rate variability and mental friction.
+              <p className="text-gray-455 text-sm leading-relaxed font-normal">
+                Humans cannot work for long, uninterrupted hours without losing performance. Aegis integrates **timed rest periods** that lock the app to enforce recovery when your condition drops.
               </p>
               <ul className="space-y-3.5 text-xs text-gray-300">
                 <li className="flex items-start gap-2.5">
                   <CheckCircle2 className="text-emerald-400 shrink-0 mt-0.5" size={16} />
-                  <span><strong>Tactile Pacing:</strong> Guided visual ring expands and contracts, establishing a clean 4-4-4-4 breathing habit.</span>
+                  <span><strong>Structured Recovery Time:</strong> Imposes a locked countdown timer, removing work-related stress and forcing a healthy boundary.</span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <CheckCircle2 className="text-emerald-400 shrink-0 mt-0.5" size={16} />
-                  <span><strong>Locked Boundary:</strong> Prevents users from returning to stress-inducing panels until they finish the pacing sequence.</span>
+                  <span><strong>Flexible Decompression:</strong> Rest can include somatic breathing exercises to drop heart rates, or simply taking a guilt-free break to scroll social media, stretch, or grab water.</span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <CheckCircle2 className="text-emerald-400 shrink-0 mt-0.5" size={16} />
-                  <span><strong>Habit Formation:</strong> Repeating this brief exercise forms a portable stress-relief routine users can utilize offline.</span>
+                  <span><strong>Village Health Interconnect:</strong> Taking timed breaks registers in-game as completing rest cycles, which repairs village buildings and generates workforce efficiency.</span>
                 </li>
               </ul>
             </div>
@@ -472,10 +472,10 @@ export default function Slideshow() {
             {/* Interactive Breathing Simulation */}
             <div className="bg-[#121212] p-6 rounded-2xl border border-gray-800 flex flex-col items-center justify-center text-center gap-6 relative overflow-hidden min-h-[300px]">
               <div className="absolute top-2 left-2 text-[10px] text-gray-500 font-mono bg-black/60 border border-gray-900 px-2 py-0.5 rounded">
-                INTERACTIVE TUTORIAL
+                INTERACTIVE TIMED BREAK
               </div>
               
-              <h3 className="text-sm font-bold text-white font-mono">Box Breathing Practice</h3>
+              <h3 className="text-sm font-bold text-white font-mono">Box Breathing or Scrolling Break</h3>
               
               <div className="relative w-36 h-36 flex items-center justify-center">
                 {/* Breathing ring */}
@@ -490,10 +490,10 @@ export default function Slideshow() {
                   className="w-28 h-28 rounded-full border-4 flex flex-col items-center justify-center bg-black/40 z-10"
                 >
                   <span className="text-[11px] text-gray-500 font-bold uppercase tracking-wider mb-0.5">
-                    {breathActive ? getBreathingLabel() : 'READY'}
+                    {breathActive ? getBreathingLabel() : 'REST TIMER'}
                   </span>
                   <span className="text-2xl font-mono font-bold text-white">
-                    {breathActive ? `${breathTimer}s` : '--'}
+                    {breathActive ? `${breathTimer}s` : '5:00'}
                   </span>
                 </motion.div>
 
@@ -515,7 +515,7 @@ export default function Slideshow() {
                     : 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 shadow-[0_0_15px_rgba(16,185,129,0.1)]'
                 }`}
               >
-                {breathActive ? 'Pause Lesson' : 'Start Paced Breathing Tutorial'}
+                {breathActive ? 'Stop Break' : 'Start Paced Rest Tutorial'}
               </button>
             </div>
           </div>
@@ -936,7 +936,7 @@ export default function Slideshow() {
   const currentSlide = SLIDES[currentSlideIndex];
 
   return (
-    <div className={`w-full flex flex-col items-center justify-center transition-all ${isImmersive ? 'fixed inset-0 bg-[#060606] z-[9999] p-6 md:p-12' : 'min-h-[550px] py-4'}`}>
+    <div className={`w-full flex flex-col items-center transition-all ${isImmersive ? 'fixed inset-0 bg-[#060606] z-[9999] p-6 md:p-12 overflow-y-auto justify-start md:justify-center' : 'justify-center min-h-[550px] py-4'}`}>
       
       {/* Immersive Banner Header */}
       {isImmersive && (
@@ -965,7 +965,7 @@ export default function Slideshow() {
       )}
 
       {/* Presentation Canvas */}
-      <div className={`relative w-full flex items-center justify-center flex-1 max-w-5xl rounded-3xl border border-gray-900 shadow-[0_0_50px_rgba(0,0,0,0.8)] overflow-hidden ${isImmersive ? 'bg-[#0b0b0b]' : 'bg-[#0f0f0f] border-gray-800/80 min-h-[500px]'}`}>
+      <div className={`relative w-full flex items-center justify-center flex-1 max-w-5xl rounded-3xl border border-gray-900 shadow-[0_0_50px_rgba(0,0,0,0.8)] overflow-hidden min-h-[500px] ${isImmersive ? 'bg-[#0b0b0b] my-8' : 'bg-[#0f0f0f] border-gray-800/80'}`}>
         
         {/* Decorative Grid Background */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#1f1f1f11_1px,transparent_1px),linear-gradient(to_bottom,#1f1f1f11_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
@@ -975,7 +975,7 @@ export default function Slideshow() {
         <div className="absolute -bottom-32 -right-32 w-80 h-80 bg-indigo-500/3 rounded-full blur-3xl pointer-events-none" />
 
         {/* Slide Carousel Container */}
-        <div className="w-full h-full p-6 md:p-12 z-10 flex flex-col justify-center min-h-[420px]">
+        <div className="w-full h-full p-6 md:p-12 z-10 flex flex-col overflow-y-auto min-h-[420px]">
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div
               key={currentSlide.id}
@@ -985,7 +985,7 @@ export default function Slideshow() {
               animate="center"
               exit="exit"
               transition={{ duration: 0.3, ease: 'easeInOut' }}
-              className="w-full h-full flex flex-col justify-center"
+              className="w-full min-h-full flex flex-col justify-start md:justify-center"
             >
               {renderSlideContent(currentSlide.id)}
             </motion.div>
