@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { ShieldCheck, Mail, Lock, User, Eye, EyeOff, ArrowRight, Loader2 } from 'lucide-react';
 
 export default function LoginPage() {
-  const { user, loading, signInWithGoogle, signInWithEmail, signUpWithEmail } = useAuth();
+  const { user, loading, signInWithGoogle, signInWithEmail, signUpWithEmail, signInAsGuest } = useAuth();
   const router = useRouter();
 
   const [isSignUp, setIsSignUp] = useState(false);
@@ -234,6 +234,24 @@ export default function LoginPage() {
               {isSignUp ? 'Sign In' : 'Sign Up'}
             </button>
           </p>
+
+          {/* Guest Access */}
+          <div className="flex items-center gap-3 mt-5 mb-1">
+            <div className="flex-1 h-px bg-gray-800" />
+            <span className="text-gray-600 text-xs font-medium uppercase tracking-wider">or</span>
+            <div className="flex-1 h-px bg-gray-800" />
+          </div>
+          <button
+            onClick={() => {
+              signInAsGuest();
+              router.replace('/');
+            }}
+            disabled={submitting}
+            className="w-full mt-2 bg-transparent border border-gray-800 text-gray-400 hover:text-white hover:border-gray-600 font-medium py-3 px-4 rounded-xl transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center gap-2"
+          >
+            Continue as Guest
+            <ArrowRight size={16} />
+          </button>
         </div>
 
         {/* Footer */}

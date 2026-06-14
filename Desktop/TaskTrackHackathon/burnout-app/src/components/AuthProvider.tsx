@@ -12,48 +12,108 @@ import {
 } from 'firebase/auth';
 import { auth, googleProvider } from '@/lib/firebase';
 
+// Guest user shape that mimics Firebase User for compatibility
+interface GuestUser {
+  displayName: string;
+  email: string;
+  uid: string;
+  isGuest: true;
+}
+
+type AppUser = User | GuestUser | null;
+
 interface AuthContextType {
-  user: User | null;
+  user: AppUser;
   loading: boolean;
+  isGuest: boolean;
   signInWithGoogle: () => Promise<void>;
   signInWithEmail: (email: string, password: string) => Promise<void>;
   signUpWithEmail: (email: string, password: string, displayName: string) => Promise<void>;
+  signInAsGuest: () => void;
   signOut: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+const GUEST_KEY = 'aegis_guest_session';
+
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<AppUser>(null);
   const [loading, setLoading] = useState(true);
+  const [isGuest, setIsGuest] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
+    // Check for existing guest session first
+    const guestSession = localStorage.getItem(GUEST_KEY);
+    if (guestSession) {
+      setUser(JSON.parse(guestSession));
+      setIsGuest(true);
       setLoading(false);
-    });
-    return () => unsubscribe();
+      return;
+    }
+
+    // Otherwise listen for Firebase auth
+    try {
+      const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+        setUser(firebaseUser);
+        setLoading(false);
+      });
+      return () => unsubscribe();
+    } catch {
+      // If Firebase fails to initialize, just stop loading
+      setLoading(false);
+    }
   }, []);
 
   const signInWithGoogle = async () => {
     await signInWithPopup(auth, googleProvider);
+    // Clear guest session if they upgrade to a real account
+    localStorage.removeItem(GUEST_KEY);
+    setIsGuest(false);
   };
 
   const signInWithEmail = async (email: string, password: string) => {
     await signInWithEmailAndPassword(auth, email, password);
+    localStorage.removeItem(GUEST_KEY);
+    setIsGuest(false);
   };
 
   const signUpWithEmail = async (email: string, password: string, displayName: string) => {
     const credential = await createUserWithEmailAndPassword(auth, email, password);
     await updateProfile(credential.user, { displayName });
+    localStorage.removeItem(GUEST_KEY);
+    setIsGuest(false);
+  };
+
+  const signInAsGuest = () => {
+    const guestUser: GuestUser = {
+      displayName: 'Guest',
+      email: 'guest@aegis.local',
+      uid: `guest_${Date.now()}`,
+      isGuest: true,
+    };
+    localStorage.setItem(GUEST_KEY, JSON.stringify(guestUser));
+    setUser(guestUser);
+    setIsGuest(true);
   };
 
   const signOut = async () => {
-    await firebaseSignOut(auth);
+    if (isGuest) {
+      localStorage.removeItem(GUEST_KEY);
+      setUser(null);
+      setIsGuest(false);
+    } else {
+      try {
+        await firebaseSignOut(auth);
+      } catch {
+        // If Firebase auth fails, just clear state
+      }
+      setUser(null);
+    }
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, signInWithGoogle, signInWithEmail, signUpWithEmail, signOut }}>
+    <AuthContext.Provider value={{ user, loading, isGuest, signInWithGoogle, signInWithEmail, signUpWithEmail, signInAsGuest, signOut }}>
       {children}
     </AuthContext.Provider>
   );
